@@ -18,6 +18,7 @@
 #sidebar {
     background: rgb(244, 241, 241);
     padding: 30px;
+    height: 100vh;
 }
 
 ul {
@@ -35,5 +36,6 @@ li {
     border: 1px solid grey;
     border-radius: 2px;
     margin: 10px;
+    height: 60vh;
 }
 
