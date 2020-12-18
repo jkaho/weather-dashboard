@@ -10,6 +10,11 @@
     padding: 0;
 }
 
+.row {
+    margin: 0;
+    padding: 0;
+}
+
 #sidebar {
     background: rgb(244, 241, 241);
     padding: 30px;
@@ -25,3 +30,10 @@ li {
     margin: 1px;
     line-height: 2em;
 }
+
+#current-weather {
+    border: 1px solid grey;
+    border-radius: 2px;
+    margin: 10px;
+}
+
