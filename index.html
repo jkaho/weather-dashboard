@@ -12,11 +12,30 @@
 
 <body>
     <header>
-        <!-- div col-12 "Weather Dashboard" -->
+        <div class="col-12">
+            Weather Dashboard
+        </div>
     </header>
-    <main>
-        <!-- div col-4 incl/ search bar & ul -->
-        <!-- div col-8 incl/ two sub-rows -->
+    
+    <main class="container">
+        <div class="row">
+            <div class="col-4">
+                Search bar<br>
+                Search history
+            </div>
+            <div class="col-8">
+                <div class="row">
+                    <div class="col">
+                        Current weather
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        5-day forecast
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
