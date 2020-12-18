@@ -4,3 +4,24 @@
     background: rgb(128, 128, 196);
     padding: 30px;
 }
+
+.container {
+    margin: 0;
+    padding: 0;
+}
+
+#sidebar {
+    background: rgb(244, 241, 241);
+    padding: 30px;
+}
+
+ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+li {
+    background: white;
+    margin: 1px;
+    line-height: 2em;
+}
