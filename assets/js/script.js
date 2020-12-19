@@ -130,8 +130,9 @@ function renderLastSearch() {
 }
 
 function renderCityBtns() {
+    $("ul").empty();
+
     $.each(storedSearches, function() {
-        $("ul").empty();
         var cityName = this;
         var cityLi = $("<li>");
         var cityBtn = $("<button>" + cityName + "</button>");
