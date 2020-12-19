@@ -43,3 +43,15 @@ li {
     display: inline-block;
     width: 20%;
 }
+
+.favorable {
+    background: green;
+}
+
+.moderate {
+    background: orange;
+}
+
+.severe {
+    background: red;
+}
