@@ -112,12 +112,16 @@ $("#search-btn").on("click", function(event) {
         for (var i = 0; i < forecastArrItem.length; i++) {
             var forecastSmallDiv = $("<div>");
             forecastSmallDiv.attr("class", "forecast-each");
-            var forecastDateDiv = $("<div>" + moment().add(i + 1, "days").format("YYYY-M-DD") + "</div>");
-            var forecastIcon = $("<img>");
+            var forecastDate = moment().add(i + 1, "days").format("YYYY-M-DD");
             var forecastIconNumber = forecastArrItem[i].weather[0].icon;
+            var forecastTemp = forecastArrItem[i].main.temp;
+            var forecastHumidity = forecastArrItem[i].main.humidity;
+
+            var forecastDateDiv = $("<div>" + forecastDate + "</div>");
+            var forecastIcon = $("<img>");
             forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
-            var forecastTempDiv = $("<div>" + forecastArrItem[i].main.temp + "</div>");
-            var forecastHumidityDiv = $("<div>" + forecastArrItem[i].main.humidity + "</div>");
+            var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
+            var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
 
             forecastSmallDiv.append(forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
             forecastDiv.append(forecastSmallDiv);
