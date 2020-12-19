@@ -25,7 +25,12 @@ $("#search-btn").on("click", function(event) {
             alert("Sorry, the city you're looking for doesn't exist in our database.")
         }
     }).then(function(response) {
-            console.log(response);    
+            console.log(response);  
+            var cityName = response.name;
+            var date = moment.unix(response.dt).format("DD/MM/YYYY");
+            var temp = response.main.temp;
+            var humidity = response.main.humidity;
+            var windSpeed = response.wind.speed // metres per second
     })
     
 
