@@ -41,4 +41,5 @@ li {
 
 .forecast-each {
     display: inline-block;
+    width: 20%;
 }
