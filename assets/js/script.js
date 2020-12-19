@@ -25,7 +25,6 @@ $("#search-btn").on("click", function(event) {
             alert("Sorry, the city you're looking for doesn't exist in our database.")
         },
         success: function(response) {
-            console.log(response);  
             var weatherDiv = $("#weather-div");
             var cityName = response.name;
             var date = moment.unix(response.dt).format("DD/MM/YYYY");
@@ -51,15 +50,14 @@ $("#search-btn").on("click", function(event) {
                 },
                 success: function(response) {
                     var uvIndex = response.value; 
+
+                    var uvIndexDiv = $("<div>" + "UV Index: " + uvIndex + "</div>");
+                    weatherDiv.append(uvIndexDiv);
                 }
             })      
         }
     })
 
-
-
-    
-      
     var forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
     
     $.ajax({
