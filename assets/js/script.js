@@ -5,6 +5,7 @@
 $("#search-btn").on("click", function(event) {
     event.preventDefault();
 
+    // API call for weather data 
     var searchWord = $("#search-word").val();
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
 
@@ -38,10 +39,11 @@ $("#search-btn").on("click", function(event) {
             var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
             weatherDiv.append(cityDateDiv, tempDiv, humidityDiv, windSpeedDiv);
 
+            // API call for UV index data 
             var latitude = response.coord.lat;
             var longitude = response.coord.lon;
             var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec"
-    
+            
             $.ajax({
                 url: uvURL,
                 method: "GET",
@@ -56,6 +58,7 @@ $("#search-btn").on("click", function(event) {
                 }
             })  
             
+            // API call for forecast data 
             var forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
     
             $.ajax({
@@ -65,7 +68,6 @@ $("#search-btn").on("click", function(event) {
                     return;
                 }
             }).then(function(response) {
-                console.log(response);    
                 var forecastDiv = $("#forecast-div");
                 forecastDiv.empty();
 
@@ -119,7 +121,7 @@ $("#search-btn").on("click", function(event) {
                     forecastSmallDiv.append(forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
                     forecastDiv.append(forecastSmallDiv);
                 }
-            })   
+            })
         }
     })
 })
