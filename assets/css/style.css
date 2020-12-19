@@ -39,3 +39,6 @@ li {
     height: 60vh;
 }
 
+.forecast-each {
+    display: inline-block;
+}

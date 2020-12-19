@@ -111,6 +111,7 @@ $("#search-btn").on("click", function(event) {
 
         for (var i = 0; i < forecastArrItem.length; i++) {
             var forecastSmallDiv = $("<div>");
+            forecastSmallDiv.attr("class", "forecast-each");
             var forecastDateDiv = $("<div>" + moment().add(i + 1, "days").format("YYYY-M-DD") + "</div>");
             var forecastIcon = $("<img>");
             var forecastIconNumber = forecastArrItem[i].weather[0].icon;
