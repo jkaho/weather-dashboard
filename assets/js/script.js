@@ -160,7 +160,6 @@ $("#search-btn").on("click", function(event) {
 
     // API call for weather data 
     var searchWord = $("#search-word").val();
-    storedSearches.push(searchWord);
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
 
     $.ajax({
@@ -170,6 +169,10 @@ $("#search-btn").on("click", function(event) {
             alert("Sorry, the city you're looking for doesn't exist in our database.")
         },
         success: function(response) {
+            if (storedSearches.includes(searchWord) === false) {
+                storedSearches.push(searchWord);
+            }
+
             var weatherDiv = $("#weather-div");
             weatherDiv.empty();
             
@@ -272,9 +275,8 @@ $("#search-btn").on("click", function(event) {
                     forecastDiv.append(forecastSmallDiv);
                 }
             })
+            storeSearches();
+            renderCityBtns();
         }
     })
-
-    storeSearches();
-    renderCityBtns();
 })
