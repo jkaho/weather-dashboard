@@ -33,8 +33,7 @@ $("#search-btn").on("click", function(event) {
             var iconNumber = response.weather[0].icon;
             var temp = response.main.temp;
             var humidity = response.main.humidity;
-            var windSpeed = response.wind.speed * 3.6; // convert metres per second to kilometres per hour
-
+            var windSpeed = (response.wind.speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
 
             var cityDateDiv = $("<div>" + cityName + " " + date + "</div>")
             var icon = $("<img>");
