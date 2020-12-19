@@ -26,15 +26,21 @@ $("#search-btn").on("click", function(event) {
         },
         success: function(response) {
             console.log(response);  
+            var weatherDiv = $("#weather-div");
             var cityName = response.name;
             var date = moment.unix(response.dt).format("DD/MM/YYYY");
             var temp = response.main.temp;
             var humidity = response.main.humidity;
-            var windSpeed = response.wind.speed // metres per second
+            var windSpeed = response.wind.speed * 3.6; // convert metres per second to kilometres per hour
+
+            var cityDateDiv = $("<div>" + cityName + " " + date + "</div>")
+            var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
+            var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
+            var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
+            weatherDiv.append(cityDateDiv, tempDiv, humidityDiv, windSpeedDiv);
 
             var latitude = response.coord.lat;
             var longitude = response.coord.lon;
-
             var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec"
     
             $.ajax({
