@@ -1,12 +1,43 @@
-// Local storage to save ul cities
+// ------- client-side storage ------- 
+var storedSearches = [];
 
-// Save last searched city into variable, display info upon opening page
+initialise();
+
+function renderLastSearch() {
+    var lastSearch = storedSearches[storedSearches.length - 1];
+   
+}
+
+function renderCityBtns() {
+    $.each(storedSearches, function() {
+        var cityName = this;
+        var cityLi = $("<li>");
+        var cityBtn = $("<button>" + cityName + "</button>");
+        cityLi.append(cityBtn);
+        $("ul").append(cityLi);
+    })
+}
+
+function initialise() {
+    var userSearch = JSON.parse(localStorage.getItem("storedSearches"));
+    if (userSearch !== null) {
+        storedSearches = userSearch;
+    }
+
+    renderLastSearch();
+    renderCityBtns();
+}
+
+function storeSearches() {
+    localStorage.setItem("storedSearches", JSON.stringify(storedSearches));
+}
 
 $("#search-btn").on("click", function(event) {
     event.preventDefault();
 
     // API call for weather data 
     var searchWord = $("#search-word").val();
+    storedSearches.push(searchWord);
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
 
     $.ajax({
@@ -18,12 +49,8 @@ $("#search-btn").on("click", function(event) {
         success: function(response) {
             var weatherDiv = $("#weather-div");
             weatherDiv.empty();
+            
             var cityName = response.name;
-            var cityLi = $("<li>");
-            var cityBtn = $("<button>" + cityName + "</button>");
-            cityLi.append(cityBtn);
-            $("ul").append(cityLi);
-
             var date = moment.unix(response.dt).format("DD/MM/YYYY");
             var iconNumber = response.weather[0].icon;
             var temp = response.main.temp;
@@ -122,31 +149,10 @@ $("#search-btn").on("click", function(event) {
                     forecastDiv.append(forecastSmallDiv);
                 }
             })
-
-            // ------- client-side storage ------- 
-            // var storedSearches = [];
-            // initialise();
-            // var lastSearch = storedSearches[storedSearches.length - 1];
-            // 
-            // function renderLastSearch() {
-            //     get above code and use lastSearch variable 
-            // }
-            //
-            // function renderCityBtns() {
-            //     render storedSearches at btns in ul
-            // }
-            //
-            // function initialise() {
-            //     getItem & renderLastSearch + renderCityBtns
-            // }
-            //
-            // function storeSearches() {
-            //     setItem
-            // }
-            // 
-            // WITHIN THIS EVENT LISTENER:
-            // push "cityName" string to storedSearches;
-            //
         }
     })
+
+    storeSearches();
+    renderLastSearch();
+    renderCityBtns();
 })
