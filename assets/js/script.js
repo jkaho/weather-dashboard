@@ -1,7 +1,7 @@
 // Grab value of search bar input to use as query in API query URL 
 
 // AJAX call using query URL for current weather
-    // Current weather data: city name, date, temp, humidity, wind speed, UV index
+    // Current weather data: city name, date, icon, temp, humidity, wind speed, UV index
 
 // AJAX call using query URL for forecast weather
     // Forecast data: date, icon, min & max temp, humidity 
@@ -25,14 +25,21 @@ $("#search-btn").on("click", function(event) {
             alert("Sorry, the city you're looking for doesn't exist in our database.")
         },
         success: function(response) {
+            console.log(response)
             var weatherDiv = $("#weather-div");
+            weatherDiv.empty();
             var cityName = response.name;
             var date = moment.unix(response.dt).format("DD/MM/YYYY");
+            var iconNumber = response.weather[0].icon;
             var temp = response.main.temp;
             var humidity = response.main.humidity;
             var windSpeed = response.wind.speed * 3.6; // convert metres per second to kilometres per hour
 
+
             var cityDateDiv = $("<div>" + cityName + " " + date + "</div>")
+            var icon = $("<img>");
+            icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
+            cityDateDiv.append(icon);
             var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
             var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
             var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
