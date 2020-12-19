@@ -69,62 +69,63 @@ function renderLastSearch() {
                 method: "GET",
                 error: function(request, error) {
                     return;
-                }
-            }).then(function(response) {
-                var forecastDiv = $("#forecast-div");
-                forecastDiv.empty();
-                
-                var forecastTemps1 = [];
-                var forecastTemps2 = [];
-                var forecastTemps3 = [];
-                var forecastTemps4 = [];
-                var forecastTemps5 = [];
-                var forecastArrItem = [];
- 
-                for (var i = 0; i < response.list.length; i++) {
-                    if (response.list[i].dt_txt.includes(moment().add(1, "days").format("YYYY-M-DD"))) {
-                        forecastTemps1.push(response.list[i].main.temp);
-                    } else if (response.list[i].dt_txt.includes(moment().add(2, "days").format("YYYY-M-DD"))) {
-                        forecastTemps2.push(response.list[i].main.temp);
-                    } else if (response.list[i].dt_txt.includes(moment().add(3, "days").format("YYYY-M-DD"))) {
-                        forecastTemps3.push(response.list[i].main.temp);
-                    } else if (response.list[i].dt_txt.includes(moment().add(4, "days").format("YYYY-M-DD"))) {
-                        forecastTemps4.push(response.list[i].main.temp);
-                    } else if (response.list[i].dt_txt.includes(moment().add(5, "days").format("YYYY-M-DD"))) {
-                        forecastTemps5.push(response.list[i].main.temp);
-                    }
-                }
-                 
-                var forecastTemp1 = Math.max.apply(null, forecastTemps1);
-                var forecastTemp2 = Math.max.apply(null, forecastTemps2);
-                var forecastTemp3 = Math.max.apply(null, forecastTemps3);
-                var forecastTemp4 = Math.max.apply(null, forecastTemps4);
-                var forecastTemp5 = Math.max.apply(null, forecastTemps5);
- 
-                for (var i = 0; i < response.list.length; i++) {
-                    if (response.list[i].main.temp === forecastTemp1 || response.list[i].main.temp === forecastTemp2 || response.list[i].main.temp === forecastTemp3 || response.list[i].main.temp === forecastTemp4 || response.list[i].main.temp === forecastTemp5) {
-                        forecastArrItem.push(response.list[i]);
-                    }
-                }
- 
-                for (var i = 0; i < forecastArrItem.length; i++) {
-                    var forecastSmallDiv = $("<div>");
-                    forecastSmallDiv.attr("class", "forecast-each");
-                    var forecastDate = moment().add(i + 1, "days").format("YYYY-M-DD");
-                    var forecastIconNumber = forecastArrItem[i].weather[0].icon;
-                    var forecastTemp = forecastArrItem[i].main.temp;
-                    var forecastHumidity = forecastArrItem[i].main.humidity;
+                }, 
+                success: function(response) {
+                    var forecastDiv = $("#forecast-div");
+                    forecastDiv.empty();
                     
-                    var forecastDateDiv = $("<div>" + forecastDate + "</div>");
-                    var forecastIcon = $("<img>");
-                    forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
-                    var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
-                    var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
- 
-                    forecastSmallDiv.append(forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
-                    forecastDiv.append(forecastSmallDiv);
-                 }
-             })
+                    var forecastTemps1 = [];
+                    var forecastTemps2 = [];
+                    var forecastTemps3 = [];
+                    var forecastTemps4 = [];
+                    var forecastTemps5 = [];
+                    var forecastArrItem = [];
+     
+                    for (var i = 0; i < response.list.length; i++) {
+                        if (response.list[i].dt_txt.includes(moment().add(1, "days").format("YYYY-M-DD"))) {
+                            forecastTemps1.push(response.list[i].main.temp);
+                        } else if (response.list[i].dt_txt.includes(moment().add(2, "days").format("YYYY-M-DD"))) {
+                            forecastTemps2.push(response.list[i].main.temp);
+                        } else if (response.list[i].dt_txt.includes(moment().add(3, "days").format("YYYY-M-DD"))) {
+                            forecastTemps3.push(response.list[i].main.temp);
+                        } else if (response.list[i].dt_txt.includes(moment().add(4, "days").format("YYYY-M-DD"))) {
+                            forecastTemps4.push(response.list[i].main.temp);
+                        } else if (response.list[i].dt_txt.includes(moment().add(5, "days").format("YYYY-M-DD"))) {
+                            forecastTemps5.push(response.list[i].main.temp);
+                        }
+                    }
+                     
+                    var forecastTemp1 = Math.max.apply(null, forecastTemps1);
+                    var forecastTemp2 = Math.max.apply(null, forecastTemps2);
+                    var forecastTemp3 = Math.max.apply(null, forecastTemps3);
+                    var forecastTemp4 = Math.max.apply(null, forecastTemps4);
+                    var forecastTemp5 = Math.max.apply(null, forecastTemps5);
+     
+                    for (var i = 0; i < response.list.length; i++) {
+                        if (response.list[i].main.temp === forecastTemp1 || response.list[i].main.temp === forecastTemp2 || response.list[i].main.temp === forecastTemp3 || response.list[i].main.temp === forecastTemp4 || response.list[i].main.temp === forecastTemp5) {
+                            forecastArrItem.push(response.list[i]);
+                        }
+                    }
+     
+                    for (var i = 0; i < forecastArrItem.length; i++) {
+                        var forecastSmallDiv = $("<div>");
+                        forecastSmallDiv.attr("class", "forecast-each");
+                        var forecastDate = moment().add(i + 1, "days").format("YYYY-M-DD");
+                        var forecastIconNumber = forecastArrItem[i].weather[0].icon;
+                        var forecastTemp = forecastArrItem[i].main.temp;
+                        var forecastHumidity = forecastArrItem[i].main.humidity;
+                        
+                        var forecastDateDiv = $("<div>" + forecastDate + "</div>");
+                        var forecastIcon = $("<img>");
+                        forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
+                        var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
+                        var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
+     
+                        forecastSmallDiv.append(forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
+                        forecastDiv.append(forecastSmallDiv);
+                    }
+                }
+            })
         }
     })
 }
@@ -218,60 +219,61 @@ function getData() {
                 method: "GET",
                 error: function(request, error) {
                     return;
-                }
-            }).then(function(response) {
-                var forecastDiv = $("#forecast-div");
-                forecastDiv.empty();
-
-                var forecastTemps1 = [];
-                var forecastTemps2 = [];
-                var forecastTemps3 = [];
-                var forecastTemps4 = [];
-                var forecastTemps5 = [];
-                var forecastArrItem = [];
-
-                for (var i = 0; i < response.list.length; i++) {
-                    if (response.list[i].dt_txt.includes(moment().add(1, "days").format("YYYY-M-DD"))) {
-                        forecastTemps1.push(response.list[i].main.temp);
-                    } else if (response.list[i].dt_txt.includes(moment().add(2, "days").format("YYYY-M-DD"))) {
-                        forecastTemps2.push(response.list[i].main.temp);
-                    } else if (response.list[i].dt_txt.includes(moment().add(3, "days").format("YYYY-M-DD"))) {
-                        forecastTemps3.push(response.list[i].main.temp);
-                    } else if (response.list[i].dt_txt.includes(moment().add(4, "days").format("YYYY-M-DD"))) {
-                        forecastTemps4.push(response.list[i].main.temp);
-                    } else if (response.list[i].dt_txt.includes(moment().add(5, "days").format("YYYY-M-DD"))) {
-                        forecastTemps5.push(response.list[i].main.temp);
+                }, 
+                success: function(response) {
+                    var forecastDiv = $("#forecast-div");
+                    forecastDiv.empty();
+    
+                    var forecastTemps1 = [];
+                    var forecastTemps2 = [];
+                    var forecastTemps3 = [];
+                    var forecastTemps4 = [];
+                    var forecastTemps5 = [];
+                    var forecastArrItem = [];
+    
+                    for (var i = 0; i < response.list.length; i++) {
+                        if (response.list[i].dt_txt.includes(moment().add(1, "days").format("YYYY-M-DD"))) {
+                            forecastTemps1.push(response.list[i].main.temp);
+                        } else if (response.list[i].dt_txt.includes(moment().add(2, "days").format("YYYY-M-DD"))) {
+                            forecastTemps2.push(response.list[i].main.temp);
+                        } else if (response.list[i].dt_txt.includes(moment().add(3, "days").format("YYYY-M-DD"))) {
+                            forecastTemps3.push(response.list[i].main.temp);
+                        } else if (response.list[i].dt_txt.includes(moment().add(4, "days").format("YYYY-M-DD"))) {
+                            forecastTemps4.push(response.list[i].main.temp);
+                        } else if (response.list[i].dt_txt.includes(moment().add(5, "days").format("YYYY-M-DD"))) {
+                            forecastTemps5.push(response.list[i].main.temp);
+                        }
                     }
-                }
-                
-                var forecastTemp1 = Math.max.apply(null, forecastTemps1);
-                var forecastTemp2 = Math.max.apply(null, forecastTemps2);
-                var forecastTemp3 = Math.max.apply(null, forecastTemps3);
-                var forecastTemp4 = Math.max.apply(null, forecastTemps4);
-                var forecastTemp5 = Math.max.apply(null, forecastTemps5);
-
-                for (var i = 0; i < response.list.length; i++) {
-                    if (response.list[i].main.temp === forecastTemp1 || response.list[i].main.temp === forecastTemp2 || response.list[i].main.temp === forecastTemp3 || response.list[i].main.temp === forecastTemp4 || response.list[i].main.temp === forecastTemp5) {
-                        forecastArrItem.push(response.list[i]);
+                    
+                    var forecastTemp1 = Math.max.apply(null, forecastTemps1);
+                    var forecastTemp2 = Math.max.apply(null, forecastTemps2);
+                    var forecastTemp3 = Math.max.apply(null, forecastTemps3);
+                    var forecastTemp4 = Math.max.apply(null, forecastTemps4);
+                    var forecastTemp5 = Math.max.apply(null, forecastTemps5);
+    
+                    for (var i = 0; i < response.list.length; i++) {
+                        if (response.list[i].main.temp === forecastTemp1 || response.list[i].main.temp === forecastTemp2 || response.list[i].main.temp === forecastTemp3 || response.list[i].main.temp === forecastTemp4 || response.list[i].main.temp === forecastTemp5) {
+                            forecastArrItem.push(response.list[i]);
+                        }
                     }
-                }
-
-                for (var i = 0; i < forecastArrItem.length; i++) {
-                    var forecastSmallDiv = $("<div>");
-                    forecastSmallDiv.attr("class", "forecast-each");
-                    var forecastDate = moment().add(i + 1, "days").format("YYYY-M-DD");
-                    var forecastIconNumber = forecastArrItem[i].weather[0].icon;
-                    var forecastTemp = forecastArrItem[i].main.temp;
-                    var forecastHumidity = forecastArrItem[i].main.humidity;
-
-                    var forecastDateDiv = $("<div>" + forecastDate + "</div>");
-                    var forecastIcon = $("<img>");
-                    forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
-                    var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
-                    var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
-
-                    forecastSmallDiv.append(forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
-                    forecastDiv.append(forecastSmallDiv);
+    
+                    for (var i = 0; i < forecastArrItem.length; i++) {
+                        var forecastSmallDiv = $("<div>");
+                        forecastSmallDiv.attr("class", "forecast-each");
+                        var forecastDate = moment().add(i + 1, "days").format("YYYY-M-DD");
+                        var forecastIconNumber = forecastArrItem[i].weather[0].icon;
+                        var forecastTemp = forecastArrItem[i].main.temp;
+                        var forecastHumidity = forecastArrItem[i].main.humidity;
+    
+                        var forecastDateDiv = $("<div>" + forecastDate + "</div>");
+                        var forecastIcon = $("<img>");
+                        forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
+                        var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
+                        var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
+    
+                        forecastSmallDiv.append(forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
+                        forecastDiv.append(forecastSmallDiv);
+                    }
                 }
             })
             storeSearches();
@@ -346,9 +348,9 @@ $(".city-btn").on("click", function() {
                 method: "GET",
                 error: function(request, error) {
                     return;
-                }
-            }).then(function(response) {
-                var forecastDiv = $("#forecast-div");
+                },
+                success: function(response) {
+                    var forecastDiv = $("#forecast-div");
                 forecastDiv.empty();
 
                 var forecastTemps1 = [];
@@ -400,6 +402,7 @@ $(".city-btn").on("click", function() {
 
                     forecastSmallDiv.append(forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
                     forecastDiv.append(forecastSmallDiv);
+                }
                 }
             })
         }
