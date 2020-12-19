@@ -51,8 +51,18 @@ function renderLastSearch() {
                 success: function(response) {
                     var uvIndex = response.value; 
  
-                    var uvIndexDiv = $("<div>" + "UV Index: " + uvIndex + "</div>");
-                    weatherDiv.append(uvIndexDiv);
+                    var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
+                    uvIndexDiv.addClass("inline-block");
+                    var uvValue = $("<p>" + uvIndex + "</p>");
+                    if (uvIndex <= 2) {
+                        uvValue.addClass("favorable");
+                    } else if (uvIndex > 2 && uvIndex <= 5) {
+                        uvValue.addClass("moderate");
+                    } else {
+                        uvValue.addClass("severe");
+                    }
+
+                    weatherDiv.append(uvIndexDiv, uvValue);
                 }
             })  
              

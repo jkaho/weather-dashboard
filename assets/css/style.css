@@ -46,12 +46,21 @@ li {
 
 .favorable {
     background: green;
+    display: inline-block;
 }
 
 .moderate {
     background: orange;
+    display: inline-block;
+
 }
 
 .severe {
     background: red;
+    display: inline-block;
+
+}
+
+.inline-block {
+    display: inline-block;
 }
