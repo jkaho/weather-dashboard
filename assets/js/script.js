@@ -16,22 +16,29 @@ $("#search-btn").on("click", function(event) {
     event.preventDefault();
 
     var searchWord = $("#search-word").val();
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
+    var weatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
 
     $.ajax({
-        url: queryURL,
-        method: "GET"
+        url: weatherURL,
+        method: "GET",
+        error: function(request, error) {
+            alert("Sorry, the city you're looking for doesn't exist in our database.")
+        }
     }).then(function(response) {
-        console.log(response);
+            console.log(response);    
     })
+    
 
-    var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
-
+    var forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
+    
     $.ajax({
-        url: queryURL,
-        method: "GET"
+        url: forecastURL,
+        method: "GET",
+        error: function(request, error) {
+            return;
+        }
     }).then(function(response) {
-        console.log(response);
-    })
+        console.log(response);    
+    })   
 })
 
