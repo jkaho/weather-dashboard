@@ -25,7 +25,6 @@ $("#search-btn").on("click", function(event) {
             alert("Sorry, the city you're looking for doesn't exist in our database.")
         },
         success: function(response) {
-            console.log(response)
             var weatherDiv = $("#weather-div");
             weatherDiv.empty();
             var cityName = response.name;
@@ -74,6 +73,37 @@ $("#search-btn").on("click", function(event) {
         }
     }).then(function(response) {
         console.log(response);    
+        var forecastDiv = $("#forecast-div");
+        forecastDiv.empty();
+
+        var forecastTemps1 = [];
+        var forecastTemps2 = [];
+        var forecastTemps3 = [];
+        var forecastTemps4 = [];
+        var forecastTemps5 = [];
+
+        for (var i = 0; i < response.list.length; i++) {
+            if (response.list[i].dt_txt.includes(moment().add(1, "days").format("YYYY-M-DD"))) {
+                forecastTemps1.push(response.list[i].main.temp);
+            } else if (response.list[i].dt_txt.includes(moment().add(2, "days").format("YYYY-M-DD"))) {
+                forecastTemps2.push(response.list[i].main.temp);
+            } else if (response.list[i].dt_txt.includes(moment().add(3, "days").format("YYYY-M-DD"))) {
+                forecastTemps3.push(response.list[i].main.temp);
+            } else if (response.list[i].dt_txt.includes(moment().add(4, "days").format("YYYY-M-DD"))) {
+                forecastTemps4.push(response.list[i].main.temp);
+            } else if (response.list[i].dt_txt.includes(moment().add(5, "days").format("YYYY-M-DD"))) {
+                forecastTemps5.push(response.list[i].main.temp);
+            }
+        }
+        
+        var forecastTemp1 = Math.max.apply(null, forecastTemps1);
+        var forecastTemp2 = Math.max.apply(null, forecastTemps2);
+        var forecastTemp3 = Math.max.apply(null, forecastTemps3);
+        var forecastTemp4 = Math.max.apply(null, forecastTemps4);
+        var forecastTemp5 = Math.max.apply(null, forecastTemps5);
+
     })   
 })
 
+// var arr = [1, 2, 3, 4, 5];
+// console.log(Math.max.apply(null, arr));
