@@ -54,9 +54,9 @@ function renderLastSearch() {
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");
-                    if (uvIndex <= 2) {
+                    if (uvIndex <= 2.5) {
                         uvValue.addClass("favorable");
-                    } else if (uvIndex > 2 && uvIndex <= 5) {
+                    } else if (uvIndex > 2.5 && uvIndex <= 5.5) {
                         uvValue.addClass("moderate");
                     } else {
                         uvValue.addClass("severe");
@@ -215,9 +215,19 @@ function getData() {
                 },
                 success: function(response) {
                     var uvIndex = response.value; 
+ 
+                    var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
+                    uvIndexDiv.addClass("inline-block");
+                    var uvValue = $("<p>" + uvIndex + "</p>");
+                    if (uvIndex <= 2.5) {
+                        uvValue.addClass("favorable");
+                    } else if (uvIndex > 2.5 && uvIndex <= 5.5) {
+                        uvValue.addClass("moderate");
+                    } else {
+                        uvValue.addClass("severe");
+                    }
 
-                    var uvIndexDiv = $("<div>" + "UV Index: " + uvIndex + "</div>");
-                    weatherDiv.append(uvIndexDiv);
+                    weatherDiv.append(uvIndexDiv, uvValue);
                 }
             })  
             
@@ -344,9 +354,19 @@ $(".city-btn").on("click", function() {
                 },
                 success: function(response) {
                     var uvIndex = response.value; 
+ 
+                    var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
+                    uvIndexDiv.addClass("inline-block");
+                    var uvValue = $("<p>" + uvIndex + "</p>");
+                    if (uvIndex <= 2.5) {
+                        uvValue.addClass("favorable");
+                    } else if (uvIndex > 2.5 && uvIndex <= 5.5) {
+                        uvValue.addClass("moderate");
+                    } else {
+                        uvValue.addClass("severe");
+                    }
 
-                    var uvIndexDiv = $("<div>" + "UV Index: " + uvIndex + "</div>");
-                    weatherDiv.append(uvIndexDiv);
+                    weatherDiv.append(uvIndexDiv, uvValue);
                 }
             })  
             
