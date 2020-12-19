@@ -122,6 +122,31 @@ $("#search-btn").on("click", function(event) {
                     forecastDiv.append(forecastSmallDiv);
                 }
             })
+
+            // ------- client-side storage ------- 
+            // var storedSearches = [];
+            // initialise();
+            // var lastSearch = storedSearches[storedSearches.length - 1];
+            // 
+            // function renderLastSearch() {
+            //     get above code and use lastSearch variable 
+            // }
+            //
+            // function renderCityBtns() {
+            //     render storedSearches at btns in ul
+            // }
+            //
+            // function initialise() {
+            //     getItem & renderLastSearch + renderCityBtns
+            // }
+            //
+            // function storeSearches() {
+            //     setItem
+            // }
+            // 
+            // WITHIN THIS EVENT LISTENER:
+            // push "cityName" string to storedSearches;
+            //
         }
     })
 })
