@@ -405,3 +405,14 @@ $(".city-btn").on("click", function() {
         }
     })
 })
+
+$("#clear-btn").on("click", function() {
+    var clearHistory = confirm("Are you sure you want to clear your search history?");
+    if (clearHistory) {
+        localStorage.clear();
+        $("ul").empty();
+        storedSearches = [];
+    } else {
+        return;
+    }
+})
