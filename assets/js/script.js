@@ -81,6 +81,7 @@ $("#search-btn").on("click", function(event) {
         var forecastTemps3 = [];
         var forecastTemps4 = [];
         var forecastTemps5 = [];
+        var forecastArrItem = [];
 
         for (var i = 0; i < response.list.length; i++) {
             if (response.list[i].dt_txt.includes(moment().add(1, "days").format("YYYY-M-DD"))) {
@@ -102,6 +103,24 @@ $("#search-btn").on("click", function(event) {
         var forecastTemp4 = Math.max.apply(null, forecastTemps4);
         var forecastTemp5 = Math.max.apply(null, forecastTemps5);
 
+        for (var i = 0; i < response.list.length; i++) {
+            if (response.list[i].main.temp === forecastTemp1 || response.list[i].main.temp === forecastTemp2 || response.list[i].main.temp === forecastTemp3 || response.list[i].main.temp === forecastTemp4 || response.list[i].main.temp === forecastTemp5) {
+                forecastArrItem.push(response.list[i]);
+            }
+        }
+
+        for (var i = 0; i < forecastArrItem.length; i++) {
+            var forecastSmallDiv = $("<div>");
+            var forecastDateDiv = $("<div>" + moment().add(i + 1, "days").format("YYYY-M-DD") + "</div>");
+            var forecastIcon = $("<img>");
+            var forecastIconNumber = forecastArrItem[i].weather[0].icon;
+            forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
+            var forecastTempDiv = $("<div>" + forecastArrItem[i].main.temp + "</div>");
+            var forecastHumidityDiv = $("<div>" + forecastArrItem[i].main.humidity + "</div>");
+
+            forecastSmallDiv.append(forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
+            forecastDiv.append(forecastSmallDiv);
+        }
     })   
 })
 
