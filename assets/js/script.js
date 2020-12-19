@@ -23,17 +23,37 @@ $("#search-btn").on("click", function(event) {
         method: "GET",
         error: function(request, error) {
             alert("Sorry, the city you're looking for doesn't exist in our database.")
-        }
-    }).then(function(response) {
+        },
+        success: function(response) {
             console.log(response);  
             var cityName = response.name;
             var date = moment.unix(response.dt).format("DD/MM/YYYY");
             var temp = response.main.temp;
             var humidity = response.main.humidity;
             var windSpeed = response.wind.speed // metres per second
-    })
-    
 
+            var latitude = response.coord.lat;
+            var longitude = response.coord.lon;
+
+            var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec"
+    
+            $.ajax({
+                url: uvURL,
+                method: "GET",
+                error: function(request, error) {
+                    return;
+                },
+                success: function(response) {
+                    var uvIndex = response.value; 
+                }
+            })      
+        }
+    })
+
+
+
+    
+      
     var forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
     
     $.ajax({
