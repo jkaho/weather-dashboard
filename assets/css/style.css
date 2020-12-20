@@ -49,6 +49,10 @@ li {
     height: 60vh;
 }
 
+.inline-block {
+    display: inline-block;
+}
+
 .favorable {
     background: green;
     display: inline-block;
@@ -67,12 +71,11 @@ li {
 }
 
 /* forecast weather */
-.forecast-each {
-    display: inline-block;
-    margin-top: 20px;
-    width: 20%;
+#forecast-heading {
+    margin: 20px 0;
 }
 
-.inline-block {
+.forecast-each {
     display: inline-block;
+    width: 20%;
 }
