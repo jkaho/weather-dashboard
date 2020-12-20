@@ -75,17 +75,21 @@ ul {
 }
 
 li {
+    margin: 3px;
     line-height: 2em;
 }
 
 .city-btn {
     background: white;
-    border-left: 2px solid black;
-    border-right: 2px solid black;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border: none;
+    border-radius: 8px;
     width: 100%;
     height: 40px;
+}
+
+.city-btn:hover {
+    background: black;
+    color: white;
 }
 
 /* current weather */
