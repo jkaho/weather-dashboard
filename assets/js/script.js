@@ -180,13 +180,19 @@ function getData() {
             alert("Sorry, the city you're looking for doesn't exist in our database.")
         },
         success: function(response) {
-            if (storedSearches.includes(searchWord) === false) {
-                storedSearches.push(searchWord);
+            var lowerSearches = [];
+            for (var i = 0; i < storedSearches.length; i++) {
+                var storedLower = storedSearches[i].toLowerCase();
+                lowerSearches.push(storedLower);
+            }
+
+            if (lowerSearches.includes(searchWord.toLowerCase()) === false) {
+                storedSearches.push(response.name);
             }
 
             var weatherDiv = $("#weather-div");
             weatherDiv.empty();
-            
+
             var cityName = response.name;
             var date = moment.unix(response.dt).format("DD/MM/YYYY");
             var iconNumber = response.weather[0].icon;
@@ -382,9 +388,9 @@ $(".city-btn").on("click", function() {
                     return;
                 },
                 success: function(response) {
-                    var forecastDiv = $("#forecast-div");
+                var forecastDiv = $("#forecast-div");
                 forecastDiv.empty();
-
+                console.log(response);
                 var forecastTemps1 = [];
                 var forecastTemps2 = [];
                 var forecastTemps3 = [];
