@@ -81,7 +81,7 @@ li {
 
 .city-btn {
     background: white;
-    border: none;
+    border: 2px solid black;
     border-radius: 8px;
     width: 100%;
     height: 40px;
@@ -90,6 +90,19 @@ li {
 .city-btn:hover {
     background: black;
     color: white;
+}
+
+#clear-btn {
+    background: rgb(233, 71, 71);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    height: 40px;
+}
+
+#clear-btn:hover {
+    background: rgb(176, 26, 26);
 }
 
 /* current weather */
