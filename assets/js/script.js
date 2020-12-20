@@ -167,6 +167,7 @@ function storeSearches() {
     localStorage.setItem("storedSearches", JSON.stringify(storedSearches));
 }
 
+// ------- getting data on search btn click ------- 
 function getData() {
     // API call for weather data 
     var searchWord = $("#search-word").val();
@@ -307,6 +308,7 @@ $("#search-btn").on("click", function(event) {
     getData();
 })
 
+// ------- getting data on city name btn click ------- 
 $(".city-btn").on("click", function() {
     var searchWord = $(this).text();
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
