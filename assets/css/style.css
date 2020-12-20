@@ -1,3 +1,5 @@
+/* HEADING */
+
 #heading {
     text-align: center;
     background: rgb(56, 65, 84);
@@ -11,6 +13,8 @@ h1 {
     color: white;
 }
 
+/* MAIN */
+
 .container-fluid {
     margin: 0;
     padding: 0;
@@ -21,6 +25,7 @@ h1 {
     padding: 0;
 }
 
+/* search sidebar */
 #sidebar {
     background: rgb(244, 241, 241);
     padding: 30px;
@@ -38,16 +43,12 @@ li {
     line-height: 2em;
 }
 
+/* current weather */
 #current-weather {
     border: 1px solid grey;
     border-radius: 2px;
     margin: 10px;
     height: 60vh;
-}
-
-.forecast-each {
-    display: inline-block;
-    width: 20%;
 }
 
 .favorable {
@@ -65,6 +66,12 @@ li {
     background: red;
     display: inline-block;
 
+}
+
+/* forecast weather */
+.forecast-each {
+    display: inline-block;
+    width: 20%;
 }
 
 .inline-block {
