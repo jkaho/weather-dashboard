@@ -1,3 +1,10 @@
+/* GENERAL */
+
+h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
 /* HEADING */
 
 #heading {
@@ -8,7 +15,7 @@
 
 h1 {
     font-family: 'Poppins', sans-serif;
-    font-weight: bold;
+    font-weight: 800;
     font-size: 40px;
     color: white;
 }
@@ -34,7 +41,7 @@ h1 {
 }
 
 form {
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
 input {
@@ -81,24 +88,28 @@ li {
 
 .city-btn {
     background: white;
-    border: 2px solid black;
+    border: 1px solid rgb(216, 215, 215);
     border-radius: 8px;
     width: 100%;
     height: 40px;
 }
 
 .city-btn:hover {
-    background: black;
+    font-weight: bold;
+    background: rgb(55, 54, 54);
+    border: none;
     color: white;
 }
 
 #clear-btn {
-    background: rgb(233, 71, 71);
+    font-weight: bold;
     color: white;
+    background: rgb(233, 71, 71);
     border: none;
     border-radius: 8px;
     width: 100%;
     height: 40px;
+    margin-top: 10px;
 }
 
 #clear-btn:hover {
