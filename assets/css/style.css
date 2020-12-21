@@ -129,9 +129,16 @@ li {
     background: rgb(176, 26, 26);
 }
 
+#hidden-row {
+    background: rgb(244, 241, 241);
+    height: 150px;
+    padding: 20px;
+}
+
 #hidden-row form  {
     display: inline-block;
-    width: 60%;
+    width: 40%;
+    margin-left: 0;
 }
 
 #hidden-row input {
@@ -149,7 +156,8 @@ li {
 .dropdown-menu {
     padding: 0;
 }
-.dropdown-menu ul, .dropdown-menu .clear-btn {
+
+.dropdown-menu ul {
     margin: 0;
 }
 
@@ -159,6 +167,11 @@ li {
 
 .dropdown-menu button {
     border-radius: 3px;
+}
+
+.dropdown-menu .clear-btn {
+    margin: 2px;
+    width: 97%;
 }
 
 /* weather div */
@@ -251,15 +264,47 @@ li {
 
 /* MEDIA QUERIES */
 @media (max-width: 576px) {
- 
+    #hidden-row {
+        height: 180px;
+    }
+
+    #hidden-row h3 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    #hidden-row form {
+        display: block;
+        margin: 0 auto;
+        width: 70%;
+    }
+
+    #dropdownMenuButton {
+        font-size: 11px;
+        display: block;
+        width: 42%;
+        margin: 10px auto;
+    }
+
+    #forecast-heading {
+        margin: 20px auto;
+    }
+
+    .forecast-each {
+        display: block;
+        margin: 3px 25%;
+    }
+}
+
+@media (max-width: 768px) {
+    .forecast-each {
+        width: 50%;
+    }
 }
 
 @media (max-width: 992px) { 
     #hidden-row {
         display: block;
-        background: rgb(244, 241, 241);
-        height: 150px;
-        padding: 20px;
     }
 
     #sidebar {
