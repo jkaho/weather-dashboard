@@ -129,6 +129,7 @@ function renderLastSearch() {
                         var forecastHumidity = forecastArrItem[i].main.humidity;
                         
                         var forecastDateDiv = $("<div>" + forecastDate + "</div>");
+                        forecastDateDiv.attr("id", "forecast-date");
                         var forecastIcon = $("<img>");
                         forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
                         var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
@@ -299,6 +300,7 @@ function getData() {
                         var forecastHumidity = forecastArrItem[i].main.humidity;
     
                         var forecastDateDiv = $("<div>" + forecastDate + "</div>");
+                        forecastDateDiv.attr("id", "forecast-date");
                         var forecastIcon = $("<img>");
                         forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
                         var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
@@ -444,6 +446,7 @@ $(".city-btn").on("click", function(event) {
                     var forecastHumidity = forecastArrItem[i].main.humidity;
 
                     var forecastDateDiv = $("<div>" + forecastDate + "</div>");
+                    forecastDateDiv.attr("id", "forecast-date");
                     var forecastIcon = $("<img>");
                     forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
                     var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
