@@ -214,6 +214,7 @@ li {
     margin: 3px;
     padding: 10px;
     width: 19%;
+    max-width: 160px;
 }
 
 /* MEDIA QUERIES */
