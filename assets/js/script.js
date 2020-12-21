@@ -321,7 +321,9 @@ $("#search-btn").on("click", function(event) {
 })
 
 // ------- getting data on city name btn click ------- 
-$(".city-btn").on("click", function() {
+$(".city-btn").on("click", function(event) {
+    event.preventDefault();
+
     var searchWord = $(this).text();
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
     
@@ -466,3 +468,6 @@ $("#clear-btn").on("click", function() {
         return;
     }
 })
+
+// Try making entire ajax call a function 
+// BUG: city btn clicks don't work after search btn has been clicked
