@@ -103,6 +103,12 @@ li {
     color: white;
 }
 
+.city-btn:focus {
+    outline: none;
+    font-weight: 600;
+    background: rgb(198, 198, 198);
+}
+
 #clear-btn {
     font-weight: bold;
     color: white;
@@ -157,7 +163,7 @@ li {
     text-align: center;
     color: white;
     border-radius: 5px;
-    width: 40px;
+    width: 50px;
 }
 
 .favorable {
