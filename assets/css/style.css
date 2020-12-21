@@ -204,6 +204,7 @@ li {
 
 .forecast-each {
     display: inline-block;
+    font-size: 14px;
     background: rgb(169, 216, 245);
     border-radius: 8px;
     margin: 3px;
