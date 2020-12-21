@@ -114,7 +114,7 @@ li {
     background: rgb(198, 198, 198);
 }
 
-#clear-btn {
+.clear-btn {
     font-weight: bold;
     color: white;
     background: rgb(233, 71, 71);
@@ -125,7 +125,7 @@ li {
     margin-top: 10px;
 }
 
-#clear-btn:hover {
+.clear-btn:hover {
     background: rgb(176, 26, 26);
 }
 
@@ -144,6 +144,21 @@ li {
     border: none;
     border-radius: 8px;
     height: 40px;
+}
+
+.dropdown-menu {
+    padding: 0;
+}
+.dropdown-menu ul, .dropdown-menu .clear-btn {
+    margin: 0;
+}
+
+.dropdown-menu li {
+    margin: 1px;
+}
+
+.dropdown-menu button {
+    border-radius: 3px;
 }
 
 /* weather div */
