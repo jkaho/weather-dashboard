@@ -130,6 +130,10 @@ li {
     height: 60vh;
 }
 
+#current-weather div {
+    margin: 10px;
+}
+
 #city-name {
     font-weight: 800;
     font-size: 35px;
@@ -149,19 +153,27 @@ li {
     display: inline-block;
 }
 
+#current-weather p {
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    width: 40px;
+}
+
 .favorable {
-    background: green;
+    background: rgb(79, 159, 79);
     display: inline-block;
 }
 
 .moderate {
-    background: orange;
+    background: rgb(237, 174, 57);
     display: inline-block;
 
 }
 
 .severe {
-    background: red;
+    background: rgb(201, 27, 27);
     display: inline-block;
 
 }
