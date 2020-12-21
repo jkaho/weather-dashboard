@@ -329,7 +329,7 @@ $("#search-btn").on("click", function(event) {
 })
 
 // ------- getting data on city name btn click ------- 
-$(".city-btn").on("click", function(event) {
+$("ul").on("click", ".city-btn", function(event) {
     event.preventDefault();
 
     var searchWord = $(this).text();
@@ -478,4 +478,3 @@ $("#clear-btn").on("click", function() {
 })
 
 // Try making entire ajax call a function 
-// BUG: city btn clicks don't work after search btn has been clicked
