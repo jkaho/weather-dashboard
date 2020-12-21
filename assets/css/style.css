@@ -5,6 +5,14 @@ h3 {
     font-weight: 600;
 }
 
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
 /* HEADING */
 
 #heading {
@@ -210,4 +218,15 @@ li {
     margin: 3px;
     padding: 10px;
     width: 19%;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 992px) { 
+    #sidebar {
+        display: none;
+    }
+    
+    input {
+        width: 80%;
+    }
 }
