@@ -130,6 +130,11 @@ li {
     height: 60vh;
 }
 
+#city-name {
+    font-weight: 600;
+    font-size: 30px;
+}
+
 .inline-block {
     display: inline-block;
 }
