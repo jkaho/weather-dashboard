@@ -22,21 +22,22 @@ function renderLastSearch() {
             var weatherDiv = $("#weather-div");
             weatherDiv.empty();
             var cityName = response.name;
-            var date = moment.unix(response.dt).format("DD/MM/YYYY");
+            var date = moment.unix(response.dt).format("dddd, Do MMMM, YYYY");
             var iconNumber = response.weather[0].icon;
             var temp = response.main.temp;
             var humidity = response.main.humidity;
             var windSpeed = (response.wind.speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
 
-            var cityDateDiv = $("<div>" + cityName + " " + date + "</div>")
-            cityDateDiv.attr("id", "city-name");
+            var cityDiv = $("<div>" + cityName + "</div>")
+            cityDiv.attr("id", "city-name");
+            var dateDiv = $("<div>" + date + "</div>");
             var icon = $("<img>");
             icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
-            cityDateDiv.append(icon);
+            cityDiv.append(icon);
             var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
             var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
             var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
-            weatherDiv.append(cityDateDiv, tempDiv, humidityDiv, windSpeedDiv);
+            weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
 
             // API call for UV index data 
             var latitude = response.coord.lat;
