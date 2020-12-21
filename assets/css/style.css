@@ -129,6 +129,15 @@ li {
     background: rgb(176, 26, 26);
 }
 
+#hidden-row form  {
+    display: inline-block;
+    width: 60%;
+}
+
+#hidden-row input {
+    width: 80%;
+}
+
 /* weather div */
 #weather {
     font-family: 'Poppins', sans-serif;
@@ -224,10 +233,6 @@ li {
         background: rgb(244, 241, 241);
         height: 150px;
         padding: 20px;
-    }
-
-    #hidden-row input {
-        width: 50%;
     }
 
     #sidebar {
