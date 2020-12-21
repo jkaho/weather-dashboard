@@ -342,10 +342,6 @@ $(".city-btn").on("click", function(event) {
             alert("Sorry, the city you're looking for doesn't exist in our database.")
         },
         success: function(response) {
-            if (storedSearches.includes(searchWord) === false) {
-                storedSearches.push(searchWord);
-            }
-
             var weatherDiv = $("#weather-div");
             weatherDiv.empty();
             
@@ -409,7 +405,7 @@ $(".city-btn").on("click", function(event) {
                 success: function(response) {
                 var forecastDiv = $("#forecast-div");
                 forecastDiv.empty();
-                console.log(response);
+
                 var forecastTemps1 = [];
                 var forecastTemps2 = [];
                 var forecastTemps3 = [];
