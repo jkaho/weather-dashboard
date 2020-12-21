@@ -147,10 +147,12 @@ li {
 
 #dropdownMenuButton {
     font-family: 'Poppins', sans-serif;
+    font-size: 13px;
     background: rgb(0, 63, 140);
     border: none;
     border-radius: 8px;
     height: 40px;
+    width: 150px;
 }
 
 .dropdown-menu {
@@ -278,11 +280,9 @@ li {
         margin: 0 auto;
         width: 70%;
     }
-
+    
     #dropdownMenuButton {
-        font-size: 11px;
         display: block;
-        width: 42%;
         margin: 10px auto;
     }
 
