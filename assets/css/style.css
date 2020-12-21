@@ -61,7 +61,7 @@ input:focus {
     background: rgb(227, 234, 243);
 }
 
-#search-btn {
+.search-btn {
     background: rgb(3, 109, 238);
     border: none;
     border-top-right-radius: 8px;
@@ -75,7 +75,7 @@ i {
     color: white;
 }
 
-#search-btn i:hover {
+.search-btn i:hover {
     transform: scale(1.4);
     transition: all .2s ease-in-out;
 }
@@ -250,6 +250,10 @@ li {
 }
 
 /* MEDIA QUERIES */
+@media (max-width: 576px) {
+ 
+}
+
 @media (max-width: 992px) { 
     #hidden-row {
         display: block;
@@ -260,6 +264,10 @@ li {
 
     #sidebar {
         display: none;
+    }
+    
+    form {
+        margin: 10px;
     }
 
     input {

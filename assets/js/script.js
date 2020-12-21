@@ -179,7 +179,7 @@ function getData() {
     // API call for weather data 
     var searchWord = $("#search-word").val();
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
-    
+
     $.ajax({
         url: weatherURL,
         method: "GET",
@@ -323,9 +323,19 @@ function getData() {
     })
 }
 
-$("#search-btn").on("click", function(event) {
+$(".search-btn").on("click", function(event) {
     event.preventDefault();
+
+    if ($(this).parent().attr("id") === "hidden-form") {
+        $("#hidden-form input").attr("id", "search-word");
+        $("#sidebar-form input").attr("id", "");
+    } else {
+        $("#sidebar-form input").attr("id", "search-word");
+        $("#hidden-form input").attr("id", "");
+    } 
+
     getData();
+    $("#search-word").val("");
 })
 
 // ------- getting data on city name btn click ------- 
