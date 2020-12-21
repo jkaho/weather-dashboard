@@ -193,5 +193,9 @@ li {
 
 .forecast-each {
     display: inline-block;
-    width: 20%;
+    background: rgb(169, 216, 245);
+    border-radius: 8px;
+    margin: 3px;
+    padding: 10px;
+    width: 19%;
 }
