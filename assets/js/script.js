@@ -123,7 +123,7 @@ function renderLastSearch() {
                     for (var i = 0; i < forecastArrItem.length; i++) {
                         var forecastSmallDiv = $("<div>");
                         forecastSmallDiv.attr("class", "forecast-each");
-                        var forecastDate = moment().add(i + 1, "days").format("YYYY-M-DD");
+                        var forecastDate = moment().add(i + 1, "days").format("DD-M-YYYY");
                         var forecastIconNumber = forecastArrItem[i].weather[0].icon;
                         var forecastTemp = forecastArrItem[i].main.temp;
                         var forecastHumidity = forecastArrItem[i].main.humidity;
@@ -197,20 +197,23 @@ function getData() {
             weatherDiv.empty();
 
             var cityName = response.name;
-            var date = moment.unix(response.dt).format("DD/MM/YYYY");
+            var date = moment.unix(response.dt).format("dddd, Do MMMM, YYYY");
             var iconNumber = response.weather[0].icon;
             var temp = response.main.temp;
             var humidity = response.main.humidity;
             var windSpeed = (response.wind.speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
 
-            var cityDateDiv = $("<div>" + cityName + " " + date + "</div>")
+            var cityDiv = $("<div>" + cityName + "</div>");
+            cityDiv.attr("id", "city-name");
+            var dateDiv = $("<div>" + date + "</div>");
+            dateDiv.attr("id", "date-div");
             var icon = $("<img>");
             icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
-            cityDateDiv.append(icon);
+            cityDiv.append(icon);
             var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
             var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
             var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
-            weatherDiv.append(cityDateDiv, tempDiv, humidityDiv, windSpeedDiv);
+            weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
 
             // API call for UV index data 
             var latitude = response.coord.lat;
@@ -290,7 +293,7 @@ function getData() {
                     for (var i = 0; i < forecastArrItem.length; i++) {
                         var forecastSmallDiv = $("<div>");
                         forecastSmallDiv.attr("class", "forecast-each");
-                        var forecastDate = moment().add(i + 1, "days").format("YYYY-M-DD");
+                        var forecastDate = moment().add(i + 1, "days").format("DD-M-YYYY");
                         var forecastIconNumber = forecastArrItem[i].weather[0].icon;
                         var forecastTemp = forecastArrItem[i].main.temp;
                         var forecastHumidity = forecastArrItem[i].main.humidity;
@@ -337,20 +340,23 @@ $(".city-btn").on("click", function() {
             weatherDiv.empty();
             
             var cityName = response.name;
-            var date = moment.unix(response.dt).format("DD/MM/YYYY");
+            var date = moment.unix(response.dt).format("dddd, Do MMMM, YYYY");
             var iconNumber = response.weather[0].icon;
             var temp = response.main.temp;
             var humidity = response.main.humidity;
             var windSpeed = (response.wind.speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
 
-            var cityDateDiv = $("<div>" + cityName + " " + date + "</div>")
+            var cityDiv = $("<div>" + cityName + "</div>");
+            cityDiv.attr("id", "city-name");
+            var dateDiv = $("<div>" + date + "</div>");
+            cityDiv.attr("id", "date-div");
             var icon = $("<img>");
             icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
-            cityDateDiv.append(icon);
+            cityDiv.append(icon);
             var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
             var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
             var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
-            weatherDiv.append(cityDateDiv, tempDiv, humidityDiv, windSpeedDiv);
+            weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
 
             // API call for UV index data 
             var latitude = response.coord.lat;
@@ -430,7 +436,7 @@ $(".city-btn").on("click", function() {
                 for (var i = 0; i < forecastArrItem.length; i++) {
                     var forecastSmallDiv = $("<div>");
                     forecastSmallDiv.attr("class", "forecast-each");
-                    var forecastDate = moment().add(i + 1, "days").format("YYYY-M-DD");
+                    var forecastDate = moment().add(i + 1, "days").format("DD-M-YYYY");
                     var forecastIconNumber = forecastArrItem[i].weather[0].icon;
                     var forecastTemp = forecastArrItem[i].main.temp;
                     var forecastHumidity = forecastArrItem[i].main.humidity;
