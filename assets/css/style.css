@@ -135,7 +135,15 @@ li {
 }
 
 #hidden-row input {
-    width: 80%;
+    width: 90%;
+}
+
+#dropdownMenuButton {
+    font-family: 'Poppins', sans-serif;
+    background: rgb(167, 35, 223);
+    border: none;
+    border-radius: 8px;
+    height: 40px;
 }
 
 /* weather div */
