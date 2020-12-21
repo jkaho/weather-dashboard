@@ -197,6 +197,11 @@ li {
     font-weight: 600;
 }
 
+#forecast-weather img {
+    display: block;
+    margin: 0 auto;
+}
+
 .forecast-each {
     display: inline-block;
     background: rgb(169, 216, 245);
