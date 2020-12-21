@@ -123,11 +123,14 @@ function renderLastSearch() {
                     for (var i = 0; i < forecastArrItem.length; i++) {
                         var forecastSmallDiv = $("<div>");
                         forecastSmallDiv.attr("class", "forecast-each");
+                        var forecastDay = moment().add(i + 1, "days").format("dddd");
                         var forecastDate = moment().add(i + 1, "days").format("DD-M-YYYY");
                         var forecastIconNumber = forecastArrItem[i].weather[0].icon;
                         var forecastTemp = forecastArrItem[i].main.temp;
                         var forecastHumidity = forecastArrItem[i].main.humidity;
                         
+                        var forecastDayDiv = $("<div>" + forecastDay + "</div>");
+                        forecastDayDiv.attr("id", "forecast-day");
                         var forecastDateDiv = $("<div>" + forecastDate + "</div>");
                         forecastDateDiv.attr("id", "forecast-date");
                         var forecastIcon = $("<img>");
@@ -135,7 +138,7 @@ function renderLastSearch() {
                         var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
                         var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
      
-                        forecastSmallDiv.append(forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
+                        forecastSmallDiv.append(forecastDayDiv, forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
                         forecastDiv.append(forecastSmallDiv);
                     }
                 }
@@ -294,11 +297,14 @@ function getData() {
                     for (var i = 0; i < forecastArrItem.length; i++) {
                         var forecastSmallDiv = $("<div>");
                         forecastSmallDiv.attr("class", "forecast-each");
+                        var forecastDay = moment().add(i + 1, "days").format("dddd");
                         var forecastDate = moment().add(i + 1, "days").format("DD-M-YYYY");
                         var forecastIconNumber = forecastArrItem[i].weather[0].icon;
                         var forecastTemp = forecastArrItem[i].main.temp;
                         var forecastHumidity = forecastArrItem[i].main.humidity;
-    
+                        
+                        var forecastDayDiv = $("<div>" + forecastDay + "</div>");
+                        forecastDayDiv.attr("id", "forecast-day");
                         var forecastDateDiv = $("<div>" + forecastDate + "</div>");
                         forecastDateDiv.attr("id", "forecast-date");
                         var forecastIcon = $("<img>");
@@ -306,7 +312,7 @@ function getData() {
                         var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
                         var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
     
-                        forecastSmallDiv.append(forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
+                        forecastSmallDiv.append(forecastDayDiv, forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
                         forecastDiv.append(forecastSmallDiv);
                     }
                 }
@@ -440,11 +446,14 @@ $(".city-btn").on("click", function(event) {
                 for (var i = 0; i < forecastArrItem.length; i++) {
                     var forecastSmallDiv = $("<div>");
                     forecastSmallDiv.attr("class", "forecast-each");
+                    var forecastDay = moment().add(i + 1, "days").format("dddd");
                     var forecastDate = moment().add(i + 1, "days").format("DD-M-YYYY");
                     var forecastIconNumber = forecastArrItem[i].weather[0].icon;
                     var forecastTemp = forecastArrItem[i].main.temp;
                     var forecastHumidity = forecastArrItem[i].main.humidity;
 
+                    var forecastDayDiv = $("<div>" + forecastDay + "</div>");
+                    forecastDayDiv.attr("id", "forecast-day");
                     var forecastDateDiv = $("<div>" + forecastDate + "</div>");
                     forecastDateDiv.attr("id", "forecast-date");
                     var forecastIcon = $("<img>");
@@ -452,7 +461,7 @@ $(".city-btn").on("click", function(event) {
                     var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
                     var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
 
-                    forecastSmallDiv.append(forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
+                    forecastSmallDiv.append(forecastDayDiv, forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
                     forecastDiv.append(forecastSmallDiv);
                 }
                 }
