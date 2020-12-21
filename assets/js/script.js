@@ -29,6 +29,7 @@ function renderLastSearch() {
             var windSpeed = (response.wind.speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
 
             var cityDateDiv = $("<div>" + cityName + " " + date + "</div>")
+            cityDateDiv.attr("id", "city-name");
             var icon = $("<img>");
             icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
             cityDateDiv.append(icon);
