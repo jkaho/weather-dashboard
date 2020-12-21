@@ -31,6 +31,7 @@ function renderLastSearch() {
             var cityDiv = $("<div>" + cityName + "</div>")
             cityDiv.attr("id", "city-name");
             var dateDiv = $("<div>" + date + "</div>");
+            dateDiv.attr("id", "date-div");
             var icon = $("<img>");
             icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
             cityDiv.append(icon);
