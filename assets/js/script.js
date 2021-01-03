@@ -11,6 +11,7 @@ function renderLastSearch() {
     } else {
         var initialURL = "http://api.openweathermap.org/data/2.5/weather?q=" + lastSearch + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
     }
+
     
     $.ajax({
         url: initialURL,
@@ -40,11 +41,24 @@ function renderLastSearch() {
             var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
             weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
 
+            
             // API call for UV index data 
             var latitude = response.coord.lat;
             var longitude = response.coord.lon;
             var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec"
              
+            // edit code -> only need this ajax call 
+            // $.ajax({
+            //     url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec",
+            //     method: "GET",
+            //     error: function(request, error) {
+            //         return;
+            //     },
+            //     success: function(response) {
+            //         console.log(response);
+            //     }
+            // })
+
             $.ajax({
                 url: uvURL,
                 method: "GET",
@@ -446,11 +460,6 @@ $("ul").on("click", ".city-btn", function(event) {
                 var forecastTemp3 = Math.max.apply(null, forecastTemps3);
                 var forecastTemp4 = Math.max.apply(null, forecastTemps4);
                 var forecastTemp5 = Math.max.apply(null, forecastTemps5);
-                console.log(forecastTemp1)
-                console.log(forecastTemp2)
-                console.log(forecastTemp3)
-                console.log(forecastTemp4)
-                console.log(forecastTemp5)
 
                 for (var i = 0; i < response.list.length; i++) {
                     if (response.list[i].main.temp === forecastTemp1 || response.list[i].main.temp === forecastTemp2 || response.list[i].main.temp === forecastTemp3 || response.list[i].main.temp === forecastTemp4 || response.list[i].main.temp === forecastTemp5) {
