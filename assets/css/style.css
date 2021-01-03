@@ -115,7 +115,8 @@ li {
 }
 
 .clear-btn {
-    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
     color: white;
     background: rgb(233, 71, 71);
     border: none;
