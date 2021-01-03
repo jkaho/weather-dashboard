@@ -26,5 +26,5 @@ This web application makes use of the OpenWeather API ([https://openweathermap.o
 
 ## Link
 
-Link to deployed application: [Link to deployed application](https://jkaho.github.io/weather-dashboard/)
+[Link to deployed application](https://jkaho.github.io/weather-dashboard/)
 
