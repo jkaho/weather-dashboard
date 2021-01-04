@@ -22,52 +22,38 @@ function renderLastSearch() {
         success: function(response) {
             var weatherDiv = $("#weather-div");
             weatherDiv.empty();
+
             var cityName = response.name;
-            var date = moment.unix(response.dt).format("dddd, Do MMMM, YYYY");
-            var iconNumber = response.weather[0].icon;
-            var temp = response.main.temp;
-            var humidity = response.main.humidity;
-            var windSpeed = (response.wind.speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
-
-            var cityDiv = $("<div>" + cityName + "</div>")
-            cityDiv.attr("id", "city-name");
-            var dateDiv = $("<div>" + date + "</div>");
-            dateDiv.attr("id", "date-div");
-            var icon = $("<img>");
-            icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
-            cityDiv.append(icon);
-            var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
-            var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
-            var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
-            weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
-
-            
-            // API call for UV index data 
             var latitude = response.coord.lat;
             var longitude = response.coord.lon;
-            var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec"
-             
-            // edit code -> only need this ajax call 
-            // $.ajax({
-            //     url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec",
-            //     method: "GET",
-            //     error: function(request, error) {
-            //         return;
-            //     },
-            //     success: function(response) {
-            //         console.log(response);
-            //     }
-            // })
 
+            // edit code -> only need this ajax call 
             $.ajax({
-                url: uvURL,
+                url: "https://api.openweathermap.org/data/2.5/onecall?units=metric&lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec",
                 method: "GET",
                 error: function(request, error) {
                     return;
                 },
                 success: function(response) {
-                    var uvIndex = response.value; 
- 
+                    var date = moment.unix(response.current.dt).format("dddd, Do MMMM, YYYY");
+                    var iconNumber = response.current.weather[0].icon;
+                    var temp = response.current.temp;
+                    var humidity = response.current.humidity;
+                    var windSpeed = (response.current.wind_speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
+                    var uvIndex = response.current.uvi; 
+
+                    var cityDiv = $("<div>" + cityName + "</div>")
+                    cityDiv.attr("id", "city-name");
+                    var dateDiv = $("<div>" + date + "</div>");
+                    dateDiv.attr("id", "date-div");
+                    var icon = $("<img>");
+                    icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
+                    cityDiv.append(icon);
+                    var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
+                    var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
+                    var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
+                    weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
+
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");
@@ -80,70 +66,36 @@ function renderLastSearch() {
                     }
 
                     weatherDiv.append(uvIndexDiv, uvValue);
-                }
-            })  
-             
-            // API call for forecast data 
-            
-            if (storedSearches.length === 0) {
-                var initialForecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=sydney&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
-            } else {
-                var initialForecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + lastSearch + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
-            }
 
-            $.ajax({
-                url: initialForecastURL,
-                method: "GET",
-                error: function(request, error) {
-                    return;
-                }, 
-                success: function(response) {
+
                     var forecastDiv = $("#forecast-div");
                     forecastDiv.empty();
-                    
-                    var forecastTemps1 = [];
-                    var forecastTemps2 = [];
-                    var forecastTemps3 = [];
-                    var forecastTemps4 = [];
-                    var forecastTemps5 = [];
+
                     var forecastArrItem = [];
-                    
-                    for (var i = 0; i < response.list.length; i++) {
-                        if (response.list[i].dt_txt.includes(moment().add(1, "days").format("YYYY-MM-DD"))) {
-                            forecastTemps1.push(response.list[i].main.temp);
-                        } else if (response.list[i].dt_txt.includes(moment().add(2, "days").format("YYYY-MM-DD"))) {
-                            forecastTemps2.push(response.list[i].main.temp);
-                        } else if (response.list[i].dt_txt.includes(moment().add(3, "days").format("YYYY-MM-DD"))) {
-                            forecastTemps3.push(response.list[i].main.temp);
-                        } else if (response.list[i].dt_txt.includes(moment().add(4, "days").format("YYYY-MM-DD"))) {
-                            forecastTemps4.push(response.list[i].main.temp);
-                        } else if (response.list[i].dt_txt.includes(moment().add(5, "days").format("YYYY-MM-DD"))) {
-                            forecastTemps5.push(response.list[i].main.temp);
-                        }
-                    }
-                     
-                    var forecastTemp1 = Math.max.apply(null, forecastTemps1);
-                    var forecastTemp2 = Math.max.apply(null, forecastTemps2);
-                    var forecastTemp3 = Math.max.apply(null, forecastTemps3);
-                    var forecastTemp4 = Math.max.apply(null, forecastTemps4);
-                    var forecastTemp5 = Math.max.apply(null, forecastTemps5);
-     
-                    for (var i = 0; i < response.list.length; i++) {
-                        if (response.list[i].main.temp === forecastTemp1 || response.list[i].main.temp === forecastTemp2 || response.list[i].main.temp === forecastTemp3 || response.list[i].main.temp === forecastTemp4 || response.list[i].main.temp === forecastTemp5) {
-                            forecastArrItem.push(response.list[i]);
+                    for (var i = 0; i < response.daily.length; i++) {
+                        var date = moment.unix(response.daily[i].dt).format("DD-MM-YYYY");
+                        if (date === moment().add(1, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        } else if (date === moment().add(2, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        } else if (date === moment().add(3, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        } else if (date === moment().add(4, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        } else if (date === moment().add(5, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
                         }
                     }
 
-                    var newForecastArrItem = forecastArrItem.slice(0, 5);
-     
-                    for (var i = 0; i < newForecastArrItem.length; i++) {
+                    for (var i = 0; i < forecastArrItem.length; i++) {
                         var forecastSmallDiv = $("<div>");
                         forecastSmallDiv.attr("class", "forecast-each");
+
                         var forecastDay = moment().add(i + 1, "days").format("dddd");
                         var forecastDate = moment().add(i + 1, "days").format("DD-MM-YYYY");
-                        var forecastIconNumber = newForecastArrItem[i].weather[0].icon;
-                        var forecastTemp = newForecastArrItem[i].main.temp;
-                        var forecastHumidity = newForecastArrItem[i].main.humidity;
+                        var forecastIconNumber = forecastArrItem[i].weather[0].icon;
+                        var forecastTemp = forecastArrItem[i].temp.day;
+                        var forecastHumidity = forecastArrItem[i].humidity;
                         
                         var forecastDayDiv = $("<div>" + forecastDay + "</div>");
                         forecastDayDiv.attr("id", "forecast-day");
@@ -159,6 +111,134 @@ function renderLastSearch() {
                     }
                 }
             })
+
+            // ^^
+
+            // var cityName = response.name;
+            // var date = moment.unix(response.dt).format("dddd, Do MMMM, YYYY");
+            // var iconNumber = response.weather[0].icon;
+            // var temp = response.main.temp;
+            // var humidity = response.main.humidity;
+            // var windSpeed = (response.wind.speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
+
+            // var cityDiv = $("<div>" + cityName + "</div>")
+            // cityDiv.attr("id", "city-name");
+            // var dateDiv = $("<div>" + date + "</div>");
+            // dateDiv.attr("id", "date-div");
+            // var icon = $("<img>");
+            // icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
+            // cityDiv.append(icon);
+            // var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
+            // var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
+            // var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
+            // weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
+
+            
+            // API call for UV index data 
+            // var latitude = response.coord.lat;
+            // var longitude = response.coord.lon;
+            // var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec"
+
+            // $.ajax({
+            //     url: uvURL,
+            //     method: "GET",
+            //     error: function(request, error) {
+            //         return;
+            //     },
+            //     success: function(response) {
+            //         var uvIndex = response.value; 
+ 
+            //         var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
+            //         uvIndexDiv.addClass("inline-block");
+            //         var uvValue = $("<p>" + uvIndex + "</p>");
+            //         if (uvIndex <= 2.5) {
+            //             uvValue.addClass("favorable");
+            //         } else if (uvIndex > 2.5 && uvIndex <= 5.5) {
+            //             uvValue.addClass("moderate");
+            //         } else {
+            //             uvValue.addClass("severe");
+            //         }
+
+            //         weatherDiv.append(uvIndexDiv, uvValue);
+            //     }
+            // })  
+             
+            // API call for forecast data 
+            
+            // if (storedSearches.length === 0) {
+            //     var initialForecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=sydney&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
+            // } else {
+            //     var initialForecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + lastSearch + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
+            // }
+
+            // $.ajax({
+            //     url: initialForecastURL,
+            //     method: "GET",
+            //     error: function(request, error) {
+            //         return;
+            //     }, 
+            //     success: function(response) {
+            //         var forecastDiv = $("#forecast-div");
+            //         forecastDiv.empty();
+                    
+            //         var forecastTemps1 = [];
+            //         var forecastTemps2 = [];
+            //         var forecastTemps3 = [];
+            //         var forecastTemps4 = [];
+            //         var forecastTemps5 = [];
+            //         var forecastArrItem = [];
+                    
+            //         for (var i = 0; i < response.list.length; i++) {
+            //             if (response.list[i].dt_txt.includes(moment().add(1, "days").format("YYYY-MM-DD"))) {
+            //                 forecastTemps1.push(response.list[i].main.temp);
+            //             } else if (response.list[i].dt_txt.includes(moment().add(2, "days").format("YYYY-MM-DD"))) {
+            //                 forecastTemps2.push(response.list[i].main.temp);
+            //             } else if (response.list[i].dt_txt.includes(moment().add(3, "days").format("YYYY-MM-DD"))) {
+            //                 forecastTemps3.push(response.list[i].main.temp);
+            //             } else if (response.list[i].dt_txt.includes(moment().add(4, "days").format("YYYY-MM-DD"))) {
+            //                 forecastTemps4.push(response.list[i].main.temp);
+            //             } else if (response.list[i].dt_txt.includes(moment().add(5, "days").format("YYYY-MM-DD"))) {
+            //                 forecastTemps5.push(response.list[i].main.temp);
+            //             }
+            //         }
+                     
+            //         var forecastTemp1 = Math.max.apply(null, forecastTemps1);
+            //         var forecastTemp2 = Math.max.apply(null, forecastTemps2);
+            //         var forecastTemp3 = Math.max.apply(null, forecastTemps3);
+            //         var forecastTemp4 = Math.max.apply(null, forecastTemps4);
+            //         var forecastTemp5 = Math.max.apply(null, forecastTemps5);
+     
+            //         for (var i = 0; i < response.list.length; i++) {
+            //             if (response.list[i].main.temp === forecastTemp1 || response.list[i].main.temp === forecastTemp2 || response.list[i].main.temp === forecastTemp3 || response.list[i].main.temp === forecastTemp4 || response.list[i].main.temp === forecastTemp5) {
+            //                 forecastArrItem.push(response.list[i]);
+            //             }
+            //         }
+
+            //         var newForecastArrItem = forecastArrItem.slice(0, 5);
+     
+            //         for (var i = 0; i < newForecastArrItem.length; i++) {
+            //             var forecastSmallDiv = $("<div>");
+            //             forecastSmallDiv.attr("class", "forecast-each");
+            //             var forecastDay = moment().add(i + 1, "days").format("dddd");
+            //             var forecastDate = moment().add(i + 1, "days").format("DD-MM-YYYY");
+            //             var forecastIconNumber = newForecastArrItem[i].weather[0].icon;
+            //             var forecastTemp = newForecastArrItem[i].main.temp;
+            //             var forecastHumidity = newForecastArrItem[i].main.humidity;
+                        
+            //             var forecastDayDiv = $("<div>" + forecastDay + "</div>");
+            //             forecastDayDiv.attr("id", "forecast-day");
+            //             var forecastDateDiv = $("<div>" + forecastDate + "</div>");
+            //             forecastDateDiv.attr("id", "forecast-date");
+            //             var forecastIcon = $("<img>");
+            //             forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
+            //             var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
+            //             var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
+     
+            //             forecastSmallDiv.append(forecastDayDiv, forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
+            //             forecastDiv.append(forecastSmallDiv);
+            //         }
+            //     }
+            // })
         }
     })
 }
@@ -217,38 +297,36 @@ function getData() {
             weatherDiv.empty();
 
             var cityName = response.name;
-            var date = moment.unix(response.dt).format("dddd, Do MMMM, YYYY");
-            var iconNumber = response.weather[0].icon;
-            var temp = response.main.temp;
-            var humidity = response.main.humidity;
-            var windSpeed = (response.wind.speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
-
-            var cityDiv = $("<div>" + cityName + "</div>");
-            cityDiv.attr("id", "city-name");
-            var dateDiv = $("<div>" + date + "</div>");
-            dateDiv.attr("id", "date-div");
-            var icon = $("<img>");
-            icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
-            cityDiv.append(icon);
-            var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
-            var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
-            var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
-            weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
-
-            // API call for UV index data 
             var latitude = response.coord.lat;
             var longitude = response.coord.lon;
-            var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec"
-            
+
+            // edit code -> only need this ajax call 
             $.ajax({
-                url: uvURL,
+                url: "https://api.openweathermap.org/data/2.5/onecall?units=metric&lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec",
                 method: "GET",
                 error: function(request, error) {
                     return;
                 },
                 success: function(response) {
-                    var uvIndex = response.value; 
- 
+                    var date = moment.unix(response.current.dt).format("dddd, Do MMMM, YYYY");
+                    var iconNumber = response.current.weather[0].icon;
+                    var temp = response.current.temp;
+                    var humidity = response.current.humidity;
+                    var windSpeed = (response.current.wind_speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
+                    var uvIndex = response.current.uvi; 
+
+                    var cityDiv = $("<div>" + cityName + "</div>")
+                    cityDiv.attr("id", "city-name");
+                    var dateDiv = $("<div>" + date + "</div>");
+                    dateDiv.attr("id", "date-div");
+                    var icon = $("<img>");
+                    icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
+                    cityDiv.append(icon);
+                    var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
+                    var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
+                    var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
+                    weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
+
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");
@@ -261,65 +339,36 @@ function getData() {
                     }
 
                     weatherDiv.append(uvIndexDiv, uvValue);
-                }
-            })  
-            
-            // API call for forecast data 
-            var forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
-    
-            $.ajax({
-                url: forecastURL,
-                method: "GET",
-                error: function(request, error) {
-                    return;
-                }, 
-                success: function(response) {
+
+
                     var forecastDiv = $("#forecast-div");
                     forecastDiv.empty();
 
-                    var forecastTemps1 = [];
-                    var forecastTemps2 = [];
-                    var forecastTemps3 = [];
-                    var forecastTemps4 = [];
-                    var forecastTemps5 = [];
                     var forecastArrItem = [];
-    
-                    for (var i = 0; i < response.list.length; i++) {
-                        if (response.list[i].dt_txt.includes(moment().add(1, "days").format("YYYY-MM-DD"))) {
-                            forecastTemps1.push(response.list[i].main.temp);
-                        } else if (response.list[i].dt_txt.includes(moment().add(2, "days").format("YYYY-MM-DD"))) {
-                            forecastTemps2.push(response.list[i].main.temp);
-                        } else if (response.list[i].dt_txt.includes(moment().add(3, "days").format("YYYY-MM-DD"))) {
-                            forecastTemps3.push(response.list[i].main.temp);
-                        } else if (response.list[i].dt_txt.includes(moment().add(4, "days").format("YYYY-MM-DD"))) {
-                            forecastTemps4.push(response.list[i].main.temp);
-                        } else if (response.list[i].dt_txt.includes(moment().add(5, "days").format("YYYY-MM-DD"))) {
-                            forecastTemps5.push(response.list[i].main.temp);
-                        }
-                    }
-                    
-                    var forecastTemp1 = Math.max.apply(null, forecastTemps1);
-                    var forecastTemp2 = Math.max.apply(null, forecastTemps2);
-                    var forecastTemp3 = Math.max.apply(null, forecastTemps3);
-                    var forecastTemp4 = Math.max.apply(null, forecastTemps4);
-                    var forecastTemp5 = Math.max.apply(null, forecastTemps5);
-    
-                    for (var i = 0; i < response.list.length; i++) {
-                        if (response.list[i].main.temp === forecastTemp1 || response.list[i].main.temp === forecastTemp2 || response.list[i].main.temp === forecastTemp3 || response.list[i].main.temp === forecastTemp4 || response.list[i].main.temp === forecastTemp5) {
-                            forecastArrItem.push(response.list[i]);
+                    for (var i = 0; i < response.daily.length; i++) {
+                        var date = moment.unix(response.daily[i].dt).format("DD-MM-YYYY");
+                        if (date === moment().add(1, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        } else if (date === moment().add(2, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        } else if (date === moment().add(3, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        } else if (date === moment().add(4, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        } else if (date === moment().add(5, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
                         }
                     }
 
-                    var newForecastArrItem = forecastArrItem.slice(0, 5);
-    
-                    for (var i = 0; i < newForecastArrItem.length; i++) {
+                    for (var i = 0; i < forecastArrItem.length; i++) {
                         var forecastSmallDiv = $("<div>");
                         forecastSmallDiv.attr("class", "forecast-each");
+
                         var forecastDay = moment().add(i + 1, "days").format("dddd");
                         var forecastDate = moment().add(i + 1, "days").format("DD-MM-YYYY");
-                        var forecastIconNumber = newForecastArrItem[i].weather[0].icon;
-                        var forecastTemp = newForecastArrItem[i].main.temp;
-                        var forecastHumidity = newForecastArrItem[i].main.humidity;
+                        var forecastIconNumber = forecastArrItem[i].weather[0].icon;
+                        var forecastTemp = forecastArrItem[i].temp.day;
+                        var forecastHumidity = forecastArrItem[i].humidity;
                         
                         var forecastDayDiv = $("<div>" + forecastDay + "</div>");
                         forecastDayDiv.attr("id", "forecast-day");
@@ -329,12 +378,138 @@ function getData() {
                         forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
                         var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
                         var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
-    
+     
                         forecastSmallDiv.append(forecastDayDiv, forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
                         forecastDiv.append(forecastSmallDiv);
                     }
                 }
             })
+                
+
+            
+
+            // var weatherDiv = $("#weather-div");
+            // weatherDiv.empty();
+
+            // var cityName = response.name;
+            // var date = moment.unix(response.dt).format("dddd, Do MMMM, YYYY");
+            // var iconNumber = response.weather[0].icon;
+            // var temp = response.main.temp;
+            // var humidity = response.main.humidity;
+            // var windSpeed = (response.wind.speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
+
+            // var cityDiv = $("<div>" + cityName + "</div>");
+            // cityDiv.attr("id", "city-name");
+            // var dateDiv = $("<div>" + date + "</div>");
+            // dateDiv.attr("id", "date-div");
+            // var icon = $("<img>");
+            // icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
+            // cityDiv.append(icon);
+            // var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
+            // var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
+            // var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
+            // weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
+
+            // // API call for UV index data 
+            // var latitude = response.coord.lat;
+            // var longitude = response.coord.lon;
+            // var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec"
+            
+            // $.ajax({
+            //     url: uvURL,
+            //     method: "GET",
+            //     error: function(request, error) {
+            //         return;
+            //     },
+            //     success: function(response) {
+            //         var uvIndex = response.value; 
+ 
+            //         var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
+            //         uvIndexDiv.addClass("inline-block");
+            //         var uvValue = $("<p>" + uvIndex + "</p>");
+            //         if (uvIndex <= 2.5) {
+            //             uvValue.addClass("favorable");
+            //         } else if (uvIndex > 2.5 && uvIndex <= 5.5) {
+            //             uvValue.addClass("moderate");
+            //         } else {
+            //             uvValue.addClass("severe");
+            //         }
+
+            //         weatherDiv.append(uvIndexDiv, uvValue);
+            //     }
+            // })  
+            
+            // // API call for forecast data 
+            // var forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
+    
+            // $.ajax({
+            //     url: forecastURL,
+            //     method: "GET",
+            //     error: function(request, error) {
+            //         return;
+            //     }, 
+            //     success: function(response) {
+            //         var forecastDiv = $("#forecast-div");
+            //         forecastDiv.empty();
+
+            //         var forecastTemps1 = [];
+            //         var forecastTemps2 = [];
+            //         var forecastTemps3 = [];
+            //         var forecastTemps4 = [];
+            //         var forecastTemps5 = [];
+            //         var forecastArrItem = [];
+    
+            //         for (var i = 0; i < response.list.length; i++) {
+            //             if (response.list[i].dt_txt.includes(moment().add(1, "days").format("YYYY-MM-DD"))) {
+            //                 forecastTemps1.push(response.list[i].main.temp);
+            //             } else if (response.list[i].dt_txt.includes(moment().add(2, "days").format("YYYY-MM-DD"))) {
+            //                 forecastTemps2.push(response.list[i].main.temp);
+            //             } else if (response.list[i].dt_txt.includes(moment().add(3, "days").format("YYYY-MM-DD"))) {
+            //                 forecastTemps3.push(response.list[i].main.temp);
+            //             } else if (response.list[i].dt_txt.includes(moment().add(4, "days").format("YYYY-MM-DD"))) {
+            //                 forecastTemps4.push(response.list[i].main.temp);
+            //             } else if (response.list[i].dt_txt.includes(moment().add(5, "days").format("YYYY-MM-DD"))) {
+            //                 forecastTemps5.push(response.list[i].main.temp);
+            //             }
+            //         }
+                    
+            //         var forecastTemp1 = Math.max.apply(null, forecastTemps1);
+            //         var forecastTemp2 = Math.max.apply(null, forecastTemps2);
+            //         var forecastTemp3 = Math.max.apply(null, forecastTemps3);
+            //         var forecastTemp4 = Math.max.apply(null, forecastTemps4);
+            //         var forecastTemp5 = Math.max.apply(null, forecastTemps5);
+    
+            //         for (var i = 0; i < response.list.length; i++) {
+            //             if (response.list[i].main.temp === forecastTemp1 || response.list[i].main.temp === forecastTemp2 || response.list[i].main.temp === forecastTemp3 || response.list[i].main.temp === forecastTemp4 || response.list[i].main.temp === forecastTemp5) {
+            //                 forecastArrItem.push(response.list[i]);
+            //             }
+            //         }
+
+            //         var newForecastArrItem = forecastArrItem.slice(0, 5);
+    
+            //         for (var i = 0; i < newForecastArrItem.length; i++) {
+            //             var forecastSmallDiv = $("<div>");
+            //             forecastSmallDiv.attr("class", "forecast-each");
+            //             var forecastDay = moment().add(i + 1, "days").format("dddd");
+            //             var forecastDate = moment().add(i + 1, "days").format("DD-MM-YYYY");
+            //             var forecastIconNumber = newForecastArrItem[i].weather[0].icon;
+            //             var forecastTemp = newForecastArrItem[i].main.temp;
+            //             var forecastHumidity = newForecastArrItem[i].main.humidity;
+                        
+            //             var forecastDayDiv = $("<div>" + forecastDay + "</div>");
+            //             forecastDayDiv.attr("id", "forecast-day");
+            //             var forecastDateDiv = $("<div>" + forecastDate + "</div>");
+            //             forecastDateDiv.attr("id", "forecast-date");
+            //             var forecastIcon = $("<img>");
+            //             forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
+            //             var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
+            //             var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
+    
+            //             forecastSmallDiv.append(forecastDayDiv, forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
+            //             forecastDiv.append(forecastSmallDiv);
+            //         }
+            //     }
+            // })
             storeSearches();
             renderCityBtns();
         }
@@ -372,40 +547,38 @@ $("ul").on("click", ".city-btn", function(event) {
         success: function(response) {
             var weatherDiv = $("#weather-div");
             weatherDiv.empty();
-            
+
             var cityName = response.name;
-            var date = moment.unix(response.dt).format("dddd, Do MMMM, YYYY");
-            var iconNumber = response.weather[0].icon;
-            var temp = response.main.temp;
-            var humidity = response.main.humidity;
-            var windSpeed = (response.wind.speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
-
-            var cityDiv = $("<div>" + cityName + "</div>");
-            cityDiv.attr("id", "city-name");
-            var dateDiv = $("<div>" + date + "</div>");
-            dateDiv.attr("id", "date-div");
-            var icon = $("<img>");
-            icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
-            cityDiv.append(icon);
-            var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
-            var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
-            var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
-            weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
-
-            // API call for UV index data 
             var latitude = response.coord.lat;
             var longitude = response.coord.lon;
-            var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec"
-            
+
+            // edit code -> only need this ajax call 
             $.ajax({
-                url: uvURL,
+                url: "https://api.openweathermap.org/data/2.5/onecall?units=metric&lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec",
                 method: "GET",
                 error: function(request, error) {
                     return;
                 },
                 success: function(response) {
-                    var uvIndex = response.value; 
- 
+                    var date = moment.unix(response.current.dt).format("dddd, Do MMMM, YYYY");
+                    var iconNumber = response.current.weather[0].icon;
+                    var temp = response.current.temp;
+                    var humidity = response.current.humidity;
+                    var windSpeed = (response.current.wind_speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
+                    var uvIndex = response.current.uvi; 
+
+                    var cityDiv = $("<div>" + cityName + "</div>")
+                    cityDiv.attr("id", "city-name");
+                    var dateDiv = $("<div>" + date + "</div>");
+                    dateDiv.attr("id", "date-div");
+                    var icon = $("<img>");
+                    icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
+                    cityDiv.append(icon);
+                    var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
+                    var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
+                    var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
+                    weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
+
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");
@@ -418,80 +591,170 @@ $("ul").on("click", ".city-btn", function(event) {
                     }
 
                     weatherDiv.append(uvIndexDiv, uvValue);
-                }
-            })  
-            
-            // API call for forecast data 
-            var forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
-    
-            $.ajax({
-                url: forecastURL,
-                method: "GET",
-                error: function(request, error) {
-                    return;
-                },
-                success: function(response) {
-                var forecastDiv = $("#forecast-div");
-                forecastDiv.empty();
 
-                var forecastTemps1 = [];
-                var forecastTemps2 = [];
-                var forecastTemps3 = [];
-                var forecastTemps4 = [];
-                var forecastTemps5 = [];
-                var forecastArrItem = [];
 
-                for (var i = 0; i < response.list.length; i++) {
-                    if (response.list[i].dt_txt.includes(moment().add(1, "days").format("YYYY-MM-DD"))) {
-                        forecastTemps1.push(response.list[i].main.temp);
-                    } else if (response.list[i].dt_txt.includes(moment().add(2, "days").format("YYYY-MM-DD"))) {
-                        forecastTemps2.push(response.list[i].main.temp);
-                    } else if (response.list[i].dt_txt.includes(moment().add(3, "days").format("YYYY-MM-DD"))) {
-                        forecastTemps3.push(response.list[i].main.temp);
-                    } else if (response.list[i].dt_txt.includes(moment().add(4, "days").format("YYYY-MM-DD"))) {
-                        forecastTemps4.push(response.list[i].main.temp);
-                    } else if (response.list[i].dt_txt.includes(moment().add(5, "days").format("YYYY-MM-DD"))) {
-                        forecastTemps5.push(response.list[i].main.temp);
+                    var forecastDiv = $("#forecast-div");
+                    forecastDiv.empty();
+
+                    var forecastArrItem = [];
+                    for (var i = 0; i < response.daily.length; i++) {
+                        var date = moment.unix(response.daily[i].dt).format("DD-MM-YYYY");
+                        if (date === moment().add(1, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        } else if (date === moment().add(2, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        } else if (date === moment().add(3, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        } else if (date === moment().add(4, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        } else if (date === moment().add(5, "days").format("DD-MM-YYYY")) {
+                            forecastArrItem.push(response.daily[i]);
+                        }
                     }
-                }
-                
-                var forecastTemp1 = Math.max.apply(null, forecastTemps1);
-                var forecastTemp2 = Math.max.apply(null, forecastTemps2);
-                var forecastTemp3 = Math.max.apply(null, forecastTemps3);
-                var forecastTemp4 = Math.max.apply(null, forecastTemps4);
-                var forecastTemp5 = Math.max.apply(null, forecastTemps5);
 
-                for (var i = 0; i < response.list.length; i++) {
-                    if (response.list[i].main.temp === forecastTemp1 || response.list[i].main.temp === forecastTemp2 || response.list[i].main.temp === forecastTemp3 || response.list[i].main.temp === forecastTemp4 || response.list[i].main.temp === forecastTemp5) {
-                        forecastArrItem.push(response.list[i]);
+                    for (var i = 0; i < forecastArrItem.length; i++) {
+                        var forecastSmallDiv = $("<div>");
+                        forecastSmallDiv.attr("class", "forecast-each");
+
+                        var forecastDay = moment().add(i + 1, "days").format("dddd");
+                        var forecastDate = moment().add(i + 1, "days").format("DD-MM-YYYY");
+                        var forecastIconNumber = forecastArrItem[i].weather[0].icon;
+                        var forecastTemp = forecastArrItem[i].temp.day;
+                        var forecastHumidity = forecastArrItem[i].humidity;
+                        
+                        var forecastDayDiv = $("<div>" + forecastDay + "</div>");
+                        forecastDayDiv.attr("id", "forecast-day");
+                        var forecastDateDiv = $("<div>" + forecastDate + "</div>");
+                        forecastDateDiv.attr("id", "forecast-date");
+                        var forecastIcon = $("<img>");
+                        forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
+                        var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
+                        var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
+     
+                        forecastSmallDiv.append(forecastDayDiv, forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
+                        forecastDiv.append(forecastSmallDiv);
                     }
-                }
-
-                var newForecastArrItem = forecastArrItem.slice(0, 5);
-                               
-                for (var i = 0; i < newForecastArrItem.length; i++) {
-                    var forecastSmallDiv = $("<div>");
-                    forecastSmallDiv.attr("class", "forecast-each");
-                    var forecastDay = moment().add(i + 1, "days").format("dddd");
-                    var forecastDate = moment().add(i + 1, "days").format("DD-MM-YYYY");
-                    var forecastIconNumber = newForecastArrItem[i].weather[0].icon;
-                    var forecastTemp = newForecastArrItem[i].main.temp;
-                    var forecastHumidity = newForecastArrItem[i].main.humidity;
-
-                    var forecastDayDiv = $("<div>" + forecastDay + "</div>");
-                    forecastDayDiv.attr("id", "forecast-day");
-                    var forecastDateDiv = $("<div>" + forecastDate + "</div>");
-                    forecastDateDiv.attr("id", "forecast-date");
-                    var forecastIcon = $("<img>");
-                    forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
-                    var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
-                    var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
-
-                    forecastSmallDiv.append(forecastDayDiv, forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
-                    forecastDiv.append(forecastSmallDiv);
-                }
                 }
             })
+        
+            // var date = moment.unix(response.dt).format("dddd, Do MMMM, YYYY");
+            // var iconNumber = response.weather[0].icon;
+            // var temp = response.main.temp;
+            // var humidity = response.main.humidity;
+            // var windSpeed = (response.wind.speed * 3.6).toFixed(2); // convert metres per second to kilometres per hour
+
+            // var cityDiv = $("<div>" + cityName + "</div>");
+            // cityDiv.attr("id", "city-name");
+            // var dateDiv = $("<div>" + date + "</div>");
+            // dateDiv.attr("id", "date-div");
+            // var icon = $("<img>");
+            // icon.attr("src", "http://openweathermap.org/img/wn/" + iconNumber + "@2x.png");
+            // cityDiv.append(icon);
+            // var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
+            // var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
+            // var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
+            // weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
+
+            // // API call for UV index data 
+            // var latitude = response.coord.lat;
+            // var longitude = response.coord.lon;
+            // var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec"
+            
+            // $.ajax({
+            //     url: uvURL,
+            //     method: "GET",
+            //     error: function(request, error) {
+            //         return;
+            //     },
+            //     success: function(response) {
+            //         var uvIndex = response.value; 
+ 
+            //         var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
+            //         uvIndexDiv.addClass("inline-block");
+            //         var uvValue = $("<p>" + uvIndex + "</p>");
+            //         if (uvIndex <= 2.5) {
+            //             uvValue.addClass("favorable");
+            //         } else if (uvIndex > 2.5 && uvIndex <= 5.5) {
+            //             uvValue.addClass("moderate");
+            //         } else {
+            //             uvValue.addClass("severe");
+            //         }
+
+            //         weatherDiv.append(uvIndexDiv, uvValue);
+            //     }
+            // })  
+            
+            // // API call for forecast data 
+            // var forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec"
+    
+            // $.ajax({
+            //     url: forecastURL,
+            //     method: "GET",
+            //     error: function(request, error) {
+            //         return;
+            //     },
+            //     success: function(response) {
+            //     var forecastDiv = $("#forecast-div");
+            //     forecastDiv.empty();
+
+            //     var forecastTemps1 = [];
+            //     var forecastTemps2 = [];
+            //     var forecastTemps3 = [];
+            //     var forecastTemps4 = [];
+            //     var forecastTemps5 = [];
+            //     var forecastArrItem = [];
+
+            //     for (var i = 0; i < response.list.length; i++) {
+            //         if (response.list[i].dt_txt.includes(moment().add(1, "days").format("YYYY-MM-DD"))) {
+            //             forecastTemps1.push(response.list[i].main.temp);
+            //         } else if (response.list[i].dt_txt.includes(moment().add(2, "days").format("YYYY-MM-DD"))) {
+            //             forecastTemps2.push(response.list[i].main.temp);
+            //         } else if (response.list[i].dt_txt.includes(moment().add(3, "days").format("YYYY-MM-DD"))) {
+            //             forecastTemps3.push(response.list[i].main.temp);
+            //         } else if (response.list[i].dt_txt.includes(moment().add(4, "days").format("YYYY-MM-DD"))) {
+            //             forecastTemps4.push(response.list[i].main.temp);
+            //         } else if (response.list[i].dt_txt.includes(moment().add(5, "days").format("YYYY-MM-DD"))) {
+            //             forecastTemps5.push(response.list[i].main.temp);
+            //         }
+            //     }
+                
+            //     var forecastTemp1 = Math.max.apply(null, forecastTemps1);
+            //     var forecastTemp2 = Math.max.apply(null, forecastTemps2);
+            //     var forecastTemp3 = Math.max.apply(null, forecastTemps3);
+            //     var forecastTemp4 = Math.max.apply(null, forecastTemps4);
+            //     var forecastTemp5 = Math.max.apply(null, forecastTemps5);
+
+            //     for (var i = 0; i < response.list.length; i++) {
+            //         if (response.list[i].main.temp === forecastTemp1 || response.list[i].main.temp === forecastTemp2 || response.list[i].main.temp === forecastTemp3 || response.list[i].main.temp === forecastTemp4 || response.list[i].main.temp === forecastTemp5) {
+            //             forecastArrItem.push(response.list[i]);
+            //         }
+            //     }
+
+            //     var newForecastArrItem = forecastArrItem.slice(0, 5);
+                               
+            //     for (var i = 0; i < newForecastArrItem.length; i++) {
+            //         var forecastSmallDiv = $("<div>");
+            //         forecastSmallDiv.attr("class", "forecast-each");
+            //         var forecastDay = moment().add(i + 1, "days").format("dddd");
+            //         var forecastDate = moment().add(i + 1, "days").format("DD-MM-YYYY");
+            //         var forecastIconNumber = newForecastArrItem[i].weather[0].icon;
+            //         var forecastTemp = newForecastArrItem[i].main.temp;
+            //         var forecastHumidity = newForecastArrItem[i].main.humidity;
+
+            //         var forecastDayDiv = $("<div>" + forecastDay + "</div>");
+            //         forecastDayDiv.attr("id", "forecast-day");
+            //         var forecastDateDiv = $("<div>" + forecastDate + "</div>");
+            //         forecastDateDiv.attr("id", "forecast-date");
+            //         var forecastIcon = $("<img>");
+            //         forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
+            //         var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
+            //         var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
+
+            //         forecastSmallDiv.append(forecastDayDiv, forecastDateDiv, forecastIcon, forecastTempDiv, forecastHumidityDiv);
+            //         forecastDiv.append(forecastSmallDiv);
+            //     }
+            //     }
+            // })
         }
     })
 })
@@ -506,5 +769,3 @@ $(".clear-btn").on("click", function() {
         return;
     }
 })
-
-// Try making entire ajax call a function 
