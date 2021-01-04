@@ -22,7 +22,7 @@ The following images are screenshots of the deployed web application.
 
 ## Credits
 
-This web application makes use of the OpenWeather API ([https://openweathermap.org/api](https://openweathermap.org/api)).
+This web application was made with the OpenWeather API ([https://openweathermap.org/api](https://openweathermap.org/api)).
 
 ## Link
 
