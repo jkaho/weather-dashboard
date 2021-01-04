@@ -4,7 +4,7 @@
 
 This web application is a responsive weather dashboard that displays the current weather and 5-day forecast for any searched city. It also stores search history for quick, one-click access to weather data. 
 
-## Screenshot 
+## Screenshots 
 
 The following images are screenshots of the deployed web application. 
 
