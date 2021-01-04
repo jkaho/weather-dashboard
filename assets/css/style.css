@@ -236,6 +236,10 @@ li {
 }
 
 /* forecast weather */
+#forecast-weather {
+    margin-bottom: 50px;
+}
+
 #forecast-heading {
     margin: 20px 0;
 }
