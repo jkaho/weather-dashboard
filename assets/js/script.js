@@ -7,9 +7,9 @@ function renderLastSearch() {
     var lastSearch = storedSearches[storedSearches.length - 1];
     
     if (storedSearches.length === 0) {
-        var initialURL = "http://api.openweathermap.org/data/2.5/weather?q=sydney&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
+        var initialURL = "https://api.openweathermap.org/data/2.5/weather?q=sydney&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
     } else {
-        var initialURL = "http://api.openweathermap.org/data/2.5/weather?q=" + lastSearch + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
+        var initialURL = "https://api.openweathermap.org/data/2.5/weather?q=" + lastSearch + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
     }
 
     
@@ -274,7 +274,7 @@ function storeSearches() {
 function getData() {
     // API call for weather data 
     var searchWord = $("#search-word").val();
-    var weatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
+    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
 
     $.ajax({
         url: weatherURL,
@@ -536,7 +536,7 @@ $("ul").on("click", ".city-btn", function(event) {
     event.preventDefault();
 
     var searchWord = $(this).text();
-    var weatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
+    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
     
     $.ajax({
         url: weatherURL,
