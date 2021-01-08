@@ -303,7 +303,7 @@ li {
         display: inline-block;
         font-size: 12px;
         margin: 3px;
-        width: 50%;
+        width: 30%;
     }
 
     #forecast1 {
@@ -312,11 +312,11 @@ li {
     }
 
     #forecast2, #forecast4 {
-        margin-left: 10%;
+        margin-left: 16%;
     }
 
     #forecast3, #forecast5 {
-        margin-right: 10%;
+        margin-right: 16%;
     }
 
     #forecast-weather img {
