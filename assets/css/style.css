@@ -295,14 +295,21 @@ li {
         margin: 20px auto;
     }
 
-
     .forecast-each {
+        font-size: 11px;
         display: block;
-        margin: 3px 32%;
+        margin: 2px;
+        width: 19%;
+        padding: 10px 5px;
+    }
+
+    #forecast-weather img {
+        height: 40px;
+        width: 40px;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px) and (min-width: 576px) {
     .forecast-each {
         width: 50%;
     }
