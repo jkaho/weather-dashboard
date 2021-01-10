@@ -1,8 +1,8 @@
-// ------- client-side storage ------- 
-var storedSearches = [];
+var storedSearches = []; // local storage array
 
 initialise();
 
+// get and render last searched or default (Sydney) weather data 
 function renderLastSearch() {
     var lastSearch = storedSearches[storedSearches.length - 1];
     
@@ -12,11 +12,10 @@ function renderLastSearch() {
         var initialURL = "https://api.openweathermap.org/data/2.5/weather?q=" + lastSearch + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
     }
 
-    
     $.ajax({
         url: initialURL,
         method: "GET",
-        error: function(request, error) {
+        error: function() {
             alert("Sorry, there was an error loading the weather data.")
         },
         success: function(response) {
@@ -27,14 +26,14 @@ function renderLastSearch() {
             var latitude = response.coord.lat;
             var longitude = response.coord.lon;
 
-            // edit code -> only need this ajax call 
             $.ajax({
                 url: "https://api.openweathermap.org/data/2.5/onecall?units=metric&lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec",
                 method: "GET",
-                error: function(request, error) {
+                error: function() {
                     return;
                 },
                 success: function(response) {
+                    // current weather data (upon opening web page)
                     var date = moment.unix(response.current.dt).format("dddd, Do MMMM, YYYY");
                     var iconNumber = response.current.weather[0].icon;
                     var temp = response.current.temp;
@@ -52,8 +51,10 @@ function renderLastSearch() {
                     var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
                     var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
                     var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
+
                     weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
 
+                    // UV index data (upon opening web page)
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");
@@ -67,11 +68,11 @@ function renderLastSearch() {
 
                     weatherDiv.append(uvIndexDiv, uvValue);
 
-
+                    // forecast weather data (upon opening web page)
                     var forecastDiv = $("#forecast-div");
                     forecastDiv.empty();
 
-                    var forecastArrItem = [];
+                    var forecastArrItem = []; // find forecast data for next 5 days
                     for (var i = 0; i < response.daily.length; i++) {
                         var date = moment.unix(response.daily[i].dt).format("DD-MM-YYYY");
                         if (date === moment().add(1, "days").format("DD-MM-YYYY")) {
@@ -143,28 +144,28 @@ function storeSearches() {
     localStorage.setItem("storedSearches", JSON.stringify(storedSearches));
 }
 
-// ------- getting data on search btn click ------- 
+// get and render weather data for searched city on button click 
 function getData() {
-    // API call for weather data 
     var searchWord = $("#search-word").val();
     var weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchWord + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
 
     $.ajax({
         url: weatherURL,
         method: "GET",
-        error: function(request, error) {
+        error: function() {
             alert("Sorry, the city you're looking for doesn't exist in our database.");
         },
         success: function(response) {
-            var lowerSearches = [];
+            var lowerSearches = []; 
             for (var i = 0; i < storedSearches.length; i++) {
                 var storedLower = storedSearches[i].toLowerCase();
                 lowerSearches.push(storedLower);
             }
 
+            // push search values to local storage array 
             if (lowerSearches.includes(searchWord.toLowerCase()) === false) {
                 storedSearches.push(response.name);
-            } else {
+            } else { // if city has been searched previously, add new item to end of array and delete old array item
                 storedSearches.push(response.name);
                 var searchIndex = lowerSearches.indexOf(searchWord.toLowerCase());
                 storedSearches.splice(searchIndex, 1);
@@ -180,10 +181,11 @@ function getData() {
             $.ajax({
                 url: "https://api.openweathermap.org/data/2.5/onecall?units=metric&lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec",
                 method: "GET",
-                error: function(request, error) {
+                error: function() {
                     return;
                 },
                 success: function(response) {
+                    // current weather data (for searched city)
                     var date = moment.unix(response.current.dt).format("dddd, Do MMMM, YYYY");
                     var iconNumber = response.current.weather[0].icon;
                     var temp = response.current.temp;
@@ -201,8 +203,10 @@ function getData() {
                     var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
                     var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
                     var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
+
                     weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
 
+                    // UV index data (for searched city)
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");
@@ -216,11 +220,11 @@ function getData() {
 
                     weatherDiv.append(uvIndexDiv, uvValue);
 
-
+                    // forecast weather data (for searched city)
                     var forecastDiv = $("#forecast-div");
                     forecastDiv.empty();
 
-                    var forecastArrItem = [];
+                    var forecastArrItem = []; // find forecast data for next 5 days
                     for (var i = 0; i < response.daily.length; i++) {
                         var date = moment.unix(response.daily[i].dt).format("DD-MM-YYYY");
                         if (date === moment().add(1, "days").format("DD-MM-YYYY")) {
@@ -283,7 +287,7 @@ $(".search-btn").on("click", function(event) {
     $("#search-word").val("");
 })
 
-// ------- getting data on city name btn click ------- 
+// get and render previous searched weather data on button click  
 $("ul").on("click", ".city-btn", function(event) {
     event.preventDefault();
 
@@ -293,7 +297,7 @@ $("ul").on("click", ".city-btn", function(event) {
     $.ajax({
         url: weatherURL,
         method: "GET",
-        error: function(request, error) {
+        error: function() {
             alert("Sorry, the city you're looking for doesn't exist in our database.")
         },
         success: function(response) {
@@ -304,14 +308,14 @@ $("ul").on("click", ".city-btn", function(event) {
             var latitude = response.coord.lat;
             var longitude = response.coord.lon;
 
-            // edit code -> only need this ajax call 
             $.ajax({
                 url: "https://api.openweathermap.org/data/2.5/onecall?units=metric&lat=" + latitude + "&lon=" + longitude + "&appid=21cf2c282545a0fc1251a4061d71efec",
                 method: "GET",
-                error: function(request, error) {
+                error: function() {
                     return;
                 },
                 success: function(response) {
+                    // current weather data (for previously searched city)
                     var date = moment.unix(response.current.dt).format("dddd, Do MMMM, YYYY");
                     var iconNumber = response.current.weather[0].icon;
                     var temp = response.current.temp;
@@ -329,8 +333,10 @@ $("ul").on("click", ".city-btn", function(event) {
                     var tempDiv = $("<div>" + "Temp: " + temp + "ºC" + "</div>");
                     var humidityDiv = $("<div>" + "Humidity: " + humidity + "%" + "</div>")
                     var windSpeedDiv = $("<div>" + "Wind Speed: " + windSpeed + "km/h" + "</div>");
+
                     weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
 
+                    // UV index data (for previously searched city)
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");
@@ -344,11 +350,11 @@ $("ul").on("click", ".city-btn", function(event) {
 
                     weatherDiv.append(uvIndexDiv, uvValue);
 
-
+                    // forecast weather data (for previously searched city)
                     var forecastDiv = $("#forecast-div");
                     forecastDiv.empty();
 
-                    var forecastArrItem = [];
+                    var forecastArrItem = []; // find forecast data for next 5 days
                     for (var i = 0; i < response.daily.length; i++) {
                         var date = moment.unix(response.daily[i].dt).format("DD-MM-YYYY");
                         if (date === moment().add(1, "days").format("DD-MM-YYYY")) {
@@ -393,6 +399,7 @@ $("ul").on("click", ".city-btn", function(event) {
     })
 })
 
+// clear search history
 $(".clear-btn").on("click", function() {
     var clearHistory = confirm("Are you sure you want to clear your search history?");
     if (clearHistory) {
