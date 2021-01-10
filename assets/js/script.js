@@ -16,7 +16,8 @@ function renderLastSearch() {
         url: initialURL,
         method: "GET",
         error: function() {
-            alert("Sorry, there was an error loading the weather data.")
+            alert("Sorry, there was an error loading the weather data.");
+            return;
         },
         success: function(response) {
             var weatherDiv = $("#weather-div");
@@ -154,6 +155,7 @@ function getData() {
         method: "GET",
         error: function() {
             alert("Sorry, the city you're looking for doesn't exist in our database.");
+            return;
         },
         success: function(response) {
             var lowerSearches = []; 
@@ -298,7 +300,8 @@ $("ul").on("click", ".city-btn", function(event) {
         url: weatherURL,
         method: "GET",
         error: function() {
-            alert("Sorry, the city you're looking for doesn't exist in our database.")
+            alert("Sorry, there was an error retrieving the requested weather data.");
+            return;
         },
         success: function(response) {
             var weatherDiv = $("#weather-div");
