@@ -57,9 +57,9 @@ function renderLastSearch() {
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");
-                    if (uvIndex <= 2.5) {
+                    if (uvIndex <= 3) {
                         uvValue.addClass("favorable");
-                    } else if (uvIndex > 2.5 && uvIndex <= 5.5) {
+                    } else if (uvIndex > 3 && uvIndex <= 6) {
                         uvValue.addClass("moderate");
                     } else {
                         uvValue.addClass("severe");
@@ -202,9 +202,9 @@ function getData() {
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");
-                    if (uvIndex <= 2.5) {
+                    if (uvIndex <= 3) {
                         uvValue.addClass("favorable");
-                    } else if (uvIndex > 2.5 && uvIndex <= 5.5) {
+                    } else if (uvIndex > 3 && uvIndex <= 6) {
                         uvValue.addClass("moderate");
                     } else {
                         uvValue.addClass("severe");
@@ -246,7 +246,8 @@ function getData() {
                         var forecastDayDiv = $("<div>" + forecastDay + "</div>");
                         forecastDayDiv.attr("class", "forecast-day");
                         var forecastDateDiv = $("<div>" + forecastDate + "</div>");
-                        forecastDateDiv.attr("class>");
+                        forecastDateDiv.attr("class", "forecast-date");
+                        var forecastIcon = $("<img>");
                         forecastIcon.attr("src", "http://openweathermap.org/img/wn/" + forecastIconNumber + "@2x.png");
                         var forecastTempDiv = $("<div>" + "Temp: " + forecastTemp + "ºC" + "</div>");
                         var forecastHumidityDiv = $("<div>" + "Humidity: " + forecastHumidity + "%" + "</div>");
@@ -329,9 +330,9 @@ $("ul").on("click", ".city-btn", function(event) {
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");
-                    if (uvIndex <= 2.5) {
+                    if (uvIndex <= 3) {
                         uvValue.addClass("favorable");
-                    } else if (uvIndex > 2.5 && uvIndex <= 5.5) {
+                    } else if (uvIndex > 3 && uvIndex <= 6) {
                         uvValue.addClass("moderate");
                     } else {
                         uvValue.addClass("severe");
