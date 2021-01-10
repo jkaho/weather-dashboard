@@ -164,6 +164,10 @@ function getData() {
 
             if (lowerSearches.includes(searchWord.toLowerCase()) === false) {
                 storedSearches.push(response.name);
+            } else {
+                storedSearches.push(response.name);
+                var searchIndex = lowerSearches.indexOf(searchWord.toLowerCase());
+                storedSearches.splice(searchIndex, 1);
             }
 
             var weatherDiv = $("#weather-div");
