@@ -56,6 +56,7 @@ function renderLastSearch() {
                     weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
 
                     // UV index data (upon opening web page)
+                    // *Note: UV value provided by API doesn't change throughout the day
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");
@@ -209,6 +210,7 @@ function getData() {
                     weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
 
                     // UV index data (for searched city)
+                    // *Note: UV value provided by API doesn't change throughout the day
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");
@@ -340,6 +342,7 @@ $("ul").on("click", ".city-btn", function(event) {
                     weatherDiv.append(cityDiv, dateDiv, tempDiv, humidityDiv, windSpeedDiv);
 
                     // UV index data (for previously searched city)
+                    // *Note: UV value provided by API doesn't change throughout the day                    
                     var uvIndexDiv = $("<div>" + "UV Index: " + "</div>");
                     uvIndexDiv.addClass("inline-block");
                     var uvValue = $("<p>" + uvIndex + "</p>");

@@ -130,6 +130,7 @@ li {
     background: rgb(176, 26, 26);
 }
 
+/* hidden search menu at top (responsive design for smaller screens) */
 #hidden-row {
     background: rgb(244, 241, 241);
     height: 150px;
@@ -218,6 +219,7 @@ li {
     width: 50px;
 }
 
+/* UV index */
 .favorable {
     background: rgb(79, 159, 79);
     display: inline-block;
@@ -271,6 +273,7 @@ li {
 
 /* MEDIA QUERIES */
 @media (max-width: 576px) {
+    /* hidden search menu at top (responsive design for smaller screens) */
     #hidden-row {
         height: 180px;
     }
@@ -291,6 +294,7 @@ li {
         margin: 10px auto;
     }
 
+    /* forecast weather */
     #forecast-heading {
         margin: 20px auto;
     }
@@ -326,16 +330,19 @@ li {
 }
 
 @media (max-width: 768px) and (min-width: 576px) {
+    /* forecast weather */
     .forecast-each {
         width: 50%;
     }
 }
 
 @media (max-width: 992px) { 
+    /* hidden search menu at top (responsive design for smaller screens) */
     #hidden-row {
         display: block;
     }
 
+    /* search sidebar */ 
     #sidebar {
         display: none;
     }
