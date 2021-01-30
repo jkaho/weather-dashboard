@@ -128,7 +128,7 @@ function renderCityBtns() {
         var cityBtn = $("<button>" + cityName + "</button>");
         cityBtn.attr("class", "city-btn");
         cityLi.append(cityBtn);
-        $("ul").append(cityLi);
+        $("ul").prepend(cityLi);
     })
 }
 
