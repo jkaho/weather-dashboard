@@ -1,12 +1,12 @@
-var storedSearches = []; // local storage array
+var storedCities = []; // local storage array
 
 initialise();
 
 // get and render last searched or default (Sydney) weather data 
 function renderLastSearch() {
-    var lastSearch = storedSearches[storedSearches.length - 1];
+    var lastSearch = storedCities[storedCities.length - 1];
     
-    if (storedSearches.length === 0) {
+    if (storedCities.length === 0) {
         var initialURL = "https://api.openweathermap.org/data/2.5/weather?q=sydney&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
     } else {
         var initialURL = "https://api.openweathermap.org/data/2.5/weather?q=" + lastSearch + "&units=metric&appid=21cf2c282545a0fc1251a4061d71efec";
@@ -122,7 +122,7 @@ function renderLastSearch() {
 function renderCityBtns() {
     $("ul").empty();
 
-    $.each(storedSearches, function() {
+    $.each(storedCities, function() {
         var cityName = this;
         var cityLi = $("<li>");
         var cityBtn = $("<button>" + cityName + "</button>");
@@ -133,9 +133,9 @@ function renderCityBtns() {
 }
 
 function initialise() {
-    var userSearch = JSON.parse(localStorage.getItem("storedSearches"));
+    var userSearch = JSON.parse(localStorage.getItem("storedCities"));
     if (userSearch !== null) {
-        storedSearches = userSearch;
+        storedCities = userSearch;
     }
 
     renderLastSearch();
@@ -143,7 +143,7 @@ function initialise() {
 }
 
 function storeSearches() {
-    localStorage.setItem("storedSearches", JSON.stringify(storedSearches));
+    localStorage.setItem("storedCities", JSON.stringify(storedCities));
 }
 
 // get and render weather data for searched city on button click 
@@ -160,18 +160,18 @@ function getData() {
         },
         success: function(response) {
             var lowerSearches = []; 
-            for (var i = 0; i < storedSearches.length; i++) {
-                var storedLower = storedSearches[i].toLowerCase();
+            for (var i = 0; i < storedCities.length; i++) {
+                var storedLower = storedCities[i].toLowerCase();
                 lowerSearches.push(storedLower);
             }
 
             // push search values to local storage array 
             if (lowerSearches.includes(searchWord.toLowerCase()) === false) {
-                storedSearches.push(response.name);
+                storedCities.push(response.name);
             } else { // if city has been searched previously, add new item to end of array and delete old array item
-                storedSearches.push(response.name);
+                storedCities.push(response.name);
                 var searchIndex = lowerSearches.indexOf(searchWord.toLowerCase());
-                storedSearches.splice(searchIndex, 1);
+                storedCities.splice(searchIndex, 1);
             }
 
             var weatherDiv = $("#weather-div");
@@ -411,7 +411,7 @@ $(".clear-btn").on("click", function() {
     if (clearHistory) {
         localStorage.clear();
         $("ul").empty();
-        storedSearches = [];
+        storedCities = [];
     } else {
         return;
     }
