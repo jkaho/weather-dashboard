@@ -1,8 +1,21 @@
 # Weather Dashboard
 
+[![License: MIT](https://img.shields.io/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Description
 
 This web application is a responsive weather dashboard that displays the current weather and 5-day forecast for any searched city. It also stores search history for quick, one-click access to weather data. 
+
+## List of technologies used
+
+- HTML
+- CSS
+- JavaScript
+- jQuery
+- Third-party API 
+- Bootstrap
+- Google Fonts
+- Font Awesome
 
 ## Screenshots 
 
