@@ -8,11 +8,12 @@ This web application is a responsive weather dashboard that displays the current
 
 ## List of technologies used
 
+- JavaScript
+- localStorage
+- jQuery
+- Third-party server-side API 
 - HTML
 - CSS
-- JavaScript
-- jQuery
-- Third-party API 
 - Bootstrap
 - Google Fonts
 - Font Awesome
